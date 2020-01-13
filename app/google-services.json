@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "253576624182",
+    "firebase_url": "https://speel-en-lees-1846c.firebaseio.com",
+    "project_id": "speel-en-lees-1846c",
+    "storage_bucket": "speel-en-lees-1846c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253576624182:android:cb62e093249457b7048097",
+        "android_client_info": {
+          "package_name": "android.example.speellees"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253576624182-ksm0oh5ioi5cjk2nrjq3lbgj803e4897.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.example.speellees",
+            "certificate_hash": "497cd388c33b572620ee84c5458967532e1ff477"
+          }
+        },
+        {
+          "client_id": "253576624182-ihs207mdq6f4kjklba80nb6ea4v757p8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnmeuNhpTFwgDq_lw2Kied3x-5t3Q-lXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253576624182-ihs207mdq6f4kjklba80nb6ea4v757p8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
