@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/c3"
+    android:paddingLeft="15dp"
+    android:layout_gravity="left"
+    android:layout_width="match_parent"
+    android:layout_height="220dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/martijn"
+        android:elevation="6dp"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Martijn"
+        android:textSize="14dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="28dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+         />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

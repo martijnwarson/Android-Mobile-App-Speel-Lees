@@ -1,6 +1,6 @@
 package android.example.speellees.activities.data;
 
-import android.example.speellees.activities.domain.Level;
+import android.example.speellees.activities.domain.Client;
 
 import androidx.annotation.NonNull;
 
@@ -15,43 +15,43 @@ import java.util.List;
 
 public class FirebaseDatabase {
     private DatabaseReference databaseReference;
-    private List<Level> levels = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 
     public FirebaseDatabase(){
-        databaseReference = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Levels");
+        databaseReference = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Clients");
     }
 
-    public FirebaseDatabase(String levelId) {
-        databaseReference = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Levels").child(levelId);
+    public FirebaseDatabase(String clientId) {
+        databaseReference = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Clients").child(clientId);
     }
 
-    public void addMember(Level level) {
-        String id = databaseReference.push().getKey(); // push() creëert een unieke string in 'Levels' in Firebase
-        level.setLevelId(id);
+    public void addClient(Client client) {
+        String id = databaseReference.push().getKey(); // push() creëert een unieke string in 'Clients' in Firebase
+        client.setClientId(id);
 
-        databaseReference.child(id).setValue(level);
+        databaseReference.child(id).setValue(client);
     }
 
-    public void updateMember(Level level) {
-        databaseReference.child(level.getLevelId()).setValue(level);
+    public void updateMember(Client client) {
+        databaseReference.child(client.getClientId()).setValue(client);
     }
 
-    public void readLevels(final DataStatus dataStatus) {
+    public void readClients(final DataStatus dataStatus) {
         databaseReference.addValueEventListener(new ValueEventListener() {
             // onDataChange wordt altijd aangeroepen als er iets verandert in de database
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                levels.clear();
+                clients.clear();
                 List<String> keys = new ArrayList<>();
 
                 // DataSnapshot bevat key en value van een specifieke node (dataSnapshot.getChildren bevat de key en value van members)
                 for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
                     keys.add(keyNode.getKey());
-                    Level level = keyNode.getValue(Level.class);
-                    levels.add(level);
+                    Client client = keyNode.getValue(Client.class);
+                    clients.add(client);
                 }
 
-                dataStatus.DataIsLoaded(levels, keys);
+                dataStatus.DataIsLoaded(clients, keys);
             }
 
             @Override
@@ -60,7 +60,7 @@ public class FirebaseDatabase {
             }
         });
     }
-        public void deleteLevel() {
+        public void deleteClient() {
             databaseReference.removeValue();
         }
 }

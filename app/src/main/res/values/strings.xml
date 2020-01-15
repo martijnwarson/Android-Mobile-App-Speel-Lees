@@ -1,29 +1,14 @@
 <resources>
     <string name="app_name">Speel &amp; Lees</string>
+    <string name="clientsOverview">Klanten overzicht</string>
+    <string name="drawerOpen">drawerOpen</string>
+    <string name="drawerClose">drawerClose</string>
+    <string name="first_name">Voornaam</string>
+    <string name="last_name">Achternaam</string>
+    <string name="datepicker">Geboortedatum</string>
+    <string name="addImage">Kies foto</string>
+    <string name="register">Sla op</string>
 
-    <string-array name="levels">
-        <item>Level 1</item>
-        <item>Level 2</item>
-        <item>Level 3</item>
-        <item>Level 4</item>
-        <item>Level 5</item>
-        <item>Level 6</item>
-        <item>Level 7</item>
-        <item>Level 8</item>
-        <item>Level 9</item>
-        <item>Level 10</item>
-    </string-array>
-
-    <string-array name="description">
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-        <item>Dit is een beschrijving</item>
-    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
