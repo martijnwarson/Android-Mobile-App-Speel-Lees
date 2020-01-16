@@ -40,9 +40,9 @@ public class ClientListActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
-        setContentView(R.layout.clients_list); //layout activity_main koppelen
+        setContentView(R.layout.clients_list);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView); //view ophalen
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<Client>();
 

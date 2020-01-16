@@ -54,7 +54,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, DateP
         mDatabase = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
 
         init();
-
         showDate.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
 
@@ -105,9 +104,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, DateP
     }
 
     public void addClient() {
-        InitializeClient();
-        //firebaseDatabase.addClient(client);
-        mDatabase.child("clients").child("Client4").setValue(client);
 
         Toast.makeText(getActivity(), "Klant toegevoegd", Toast.LENGTH_LONG).show();
 

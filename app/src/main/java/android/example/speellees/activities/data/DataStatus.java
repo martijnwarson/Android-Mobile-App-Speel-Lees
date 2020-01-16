@@ -1,7 +1,6 @@
 package android.example.speellees.activities.data;
 
 import android.example.speellees.activities.domain.Client;
-import android.example.speellees.activities.domain.Level;
 
 import java.util.List;
 
