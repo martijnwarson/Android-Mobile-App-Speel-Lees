@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivUpdateProfilePicture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/warmgray"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="22dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etFirstname"
+            android:hint="Voornaam"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="21sp"
+            android:textColorHint="@color/warmgray"
+            android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@color/warmgray"
+            android:textColor="@color/orange" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etLastname"
+            android:hint="Achternaam"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="21sp"
+            android:textColorHint="@color/warmgray"
+            android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@color/warmgray"
+            android:textColor="@color/orange" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDateSelector"
+            android:hint="Geboortedatum"
+            android:layout_marginStart="21dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="21sp"
+            android:textColorHint="@color/warmgray"
+            android:textColor="@color/orange" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etAddress"
+            android:hint="Adres"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="21sp"
+            android:textColorHint="@color/warmgray"
+            android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@color/warmgray"
+            android:textColor="@color/orange"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etZipcode"
+            android:hint="Postcode"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="21sp"
+            android:textColorHint="@color/warmgray"
+            android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@color/warmgray"
+            android:textColor="@color/orange"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etCity"
+            android:hint="Gemeente"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="21sp"
+            android:textColorHint="@color/warmgray"
+            android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@color/warmgray"
+            android:textColor="@color/orange"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="21dp">
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="03dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/orange"
+                    android:text="Sla wijzigingen op"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

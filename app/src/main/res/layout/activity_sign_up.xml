@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.SignUpActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:layout_marginTop="180dp"
+        android:textSize="22sp"
+        android:id="@+id/et_email"
+        android:inputType="textEmailAddress"
+        android:hint="Email adres"
+        android:textColorHint="@color/warmgray"
+        android:backgroundTint="@color/lightgrayTransparant"
+        android:textCursorDrawable="@color/lightgrayTransparant"
+        android:textColor="@color/warmgray"/>
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:id="@+id/et_password"
+        android:inputType="textPassword"
+        android:hint="Wachtwoord"
+        android:textColorHint="@color/blueTransparant"
+        android:backgroundTint="@color/lightgrayTransparant"
+        android:textCursorDrawable="@color/lightgrayTransparant"
+        android:textColor="@color/warmgray"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/btn_sign_up"
+        android:text="Maak nieuw account"
+        android:layout_marginTop="30dp"
+        android:background="@color/orange"
+        android:textColor="#FFFFFF"
+        android:padding="7sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:id="@+id/tv_existing_account"
+        android:text="Heb je al een account? Ga naar het login venster"
+        android:textColor="@color/orange" />
+</LinearLayout>

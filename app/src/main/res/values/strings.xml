@@ -1,13 +1,51 @@
 <resources>
-    <string name="app_name">Speel &amp; Lees</string>
-    <string name="clientsOverview">Klanten overzicht</string>
+    <string name="app_name">Union</string>
+
+    <!-- Navigation Menu -->
+    <string name="menu_home">Home</string>
+    <string name="menu_show_members">Leden</string>
+    <string name="menu_add_member">Voeg lid toe</string>
+    <string name="menu_logout">Meld af</string>
+    <string name="title_activity_home_drawer">HomeDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="showMembers">Leden</string>
+    <string name="insertMember">Voeg lid toe</string>
+    <string name="logout">Meld af</string>
+    <string name="action_settings">Instellingen</string>
     <string name="drawerOpen">drawerOpen</string>
     <string name="drawerClose">drawerClose</string>
-    <string name="first_name">Voornaam</string>
-    <string name="last_name">Achternaam</string>
-    <string name="datepicker">Geboortedatum</string>
-    <string name="addImage">Kies foto</string>
-    <string name="register">Sla op</string>
+
+    <!-- HomeFragment -->
+    <string name="welcome">Welkom bij</string>
+
+    <!-- DetailActivity -->
+    <string name="detail_firstname">Voornaam</string>
+    <string name="detail_lastname">Achternaam</string>
+    <string name="detail_birthdate">Geboortedatum</string>
+    <string name="detail_address">Straat + huisnummer</string>
+    <string name="detail_postalCode">Postcode</string>
+    <string name="detail_city">Gemeente</string>
+    <string name="detail_telephone">Telefoonnummer</string>
+    <string name="detail_instrument">Instrument</string>
+    <string name="button_back">Ga terug</string>
+    <string name="button_update">Wijzig</string>
+    <string name="button_delete">Verwijder</string>
+    <string name="dummyData">Dummy</string>
+    <string name="chooseMember">Kies een lid waarvan je de gegevens wilt bekijken.</string>
+
+    <!-- UpdateActivity -->
+    <string name="btnUpdate">Wijzig</string>
+    <string name="btnBack">Ga terug</string>
+
+    <!-- Keys voor shared preferences -->
+    <string name="preferencesCheckbox">android.example.speelenlees.checkbox</string>
+    <string name="preferencesEmail">android.example.speelenlees.email</string>
+    <string name="preferencesPassword">android.example.speelenlees.password</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

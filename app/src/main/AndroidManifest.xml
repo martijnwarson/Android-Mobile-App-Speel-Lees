@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.example.speellees">
+    package="android.example.speelenlees">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Speel en lees"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity"></activity>
-        <activity android:name=".activities.activities.ClientActivity" />
-        <activity android:name=".activities.activities.HomeActivity">
+        <activity android:name=".activities.UpdateActivity"></activity>
+
+        <service
+            android:name=".domain.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.GettingDeviceTokenService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.FirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".activities.LogInActivity" />
+        <activity android:name=".activities.SignUpActivity" />
+        <activity
+            android:name=".activities.ui.homepages.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.master.ClientListActivity" />
+        <activity android:name=".activities.master.ClientDetailActivity" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="Speel en Lees"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
