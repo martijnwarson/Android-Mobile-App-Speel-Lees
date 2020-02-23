@@ -288,7 +288,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
             storageReference = storageReference.child(pictureName);
 
             storageReference.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
+               // @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Log.i(TAG, "Image selected successfully");
                 }

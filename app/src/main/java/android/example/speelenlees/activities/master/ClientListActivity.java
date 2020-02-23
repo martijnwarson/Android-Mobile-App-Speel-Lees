@@ -33,7 +33,7 @@ import android.widget.TextView;
 //RECYCLERVIEW
 public class ClientListActivity extends AppCompatActivity {
     private boolean twoPanes;
-    private static final String TAG = "MemberListActivity";
+    private static final String TAG = "ClientsListActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class ClientListActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Back-knop
 
         // Titel van Actionbar instellen
-        setTitle("Cliënts overzicht");
+        setTitle("Cliënten overzicht");
 
         if (checkLandscapeMode()) {
             Log.i(TAG, "In landscape mode");

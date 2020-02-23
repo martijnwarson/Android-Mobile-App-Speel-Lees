@@ -41,7 +41,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        setTitle("Inloggen");
+        //setTitle("Inloggen");
 
         init();
 
@@ -60,10 +60,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         initializeAuthStateListener();
 
-        // Preferences
         preferences = getSharedPreferences("myApp", Context.MODE_PRIVATE);
         editor = preferences.edit();
-        checkSharedPreferences();
+        checkPreferences();
     }
 
     private void initializeAuthStateListener() {
@@ -75,15 +74,15 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         };
     }
 
-    private void checkSharedPreferences() {
-        String  pref_checkbox = preferences.getString("android.example.speelenlees.checkbox", "False");
-        String pref_email = preferences.getString("android.example.speelenlees.email", "");
-        String pref_password = preferences.getString("android.example.speelenlees.password", "");
+    private void checkPreferences() {
+        String  p_checkbox = preferences.getString("android.example.speelenlees.checkbox", "False");
+        String p_email = preferences.getString("android.example.speelenlees.email", "");
+        String p_password = preferences.getString("android.example.speelenlees.password", "");
 
-        et_email.setText(pref_email);
-        et_Password.setText(pref_password);
+        et_email.setText(p_email);
+        et_Password.setText(p_password);
 
-        if (pref_checkbox.equals("True")) {
+        if (p_checkbox.equals("True")) {
             cb_stay_logged_in.setChecked(true);
         } else {
             cb_stay_logged_in.setChecked(false);
@@ -95,7 +94,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             startLogin();
         }
         else if (v.getId() == R.id.tv_no_account) {
-            goToSignUp();
+            redirectToSignUp();
         }
     }
 
@@ -104,12 +103,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         password = et_Password.getText().toString();
 
         if (email.isEmpty() && password.isEmpty()) {
-            Toast.makeText(this, "Beide velden dienen ingevuld te zijn", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Zowel email als wachtwoord dienen ingevuld te zijn", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Fields not filled in correctly");
         }
         else if (email.isEmpty()) {
             et_email.setError("Geef een email adres in.");
-            et_email.requestFocus(); //als we op tab klikken, gaat deze naar deze input
+            et_email.requestFocus(); //kunnen op tab duwen
             Log.e(TAG, "Email field not filled in correctly");
         }
         else if (password.isEmpty()) {
@@ -118,12 +117,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             Log.e(TAG, "Password field not filled in correctly");
         }
         else {
-            saveSharedPreferences(email, password);
+            savePreferences(email, password);
             login();
         }
     }
 
-    private void saveSharedPreferences(String email, String password) {
+    private void savePreferences(String email, String password) {
         if (cb_stay_logged_in.isChecked()) {
             editor.putString("android.example.speelenlees.checkbox", "True");
             editor.commit();
@@ -161,7 +160,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private void goToSignUp() {
+    private void redirectToSignUp() {
         Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
         startActivity(intent);
     }

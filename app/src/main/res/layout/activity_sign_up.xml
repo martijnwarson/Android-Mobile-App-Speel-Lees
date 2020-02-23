@@ -32,7 +32,7 @@
         android:id="@+id/et_password"
         android:inputType="textPassword"
         android:hint="Wachtwoord"
-        android:textColorHint="@color/blueTransparant"
+        android:textColorHint="@color/warmgray"
         android:backgroundTint="@color/lightgrayTransparant"
         android:textCursorDrawable="@color/lightgrayTransparant"
         android:textColor="@color/warmgray"/>

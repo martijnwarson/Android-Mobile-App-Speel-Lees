@@ -13,26 +13,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.UpdateActivity"></activity>
 
-        <service
-            android:name=".domain.MyFirebaseMessagingService"
-            android:enabled="true"
-            android:exported="true" />
+
+
         <service
             android:name=".services.GettingDeviceTokenService"
             android:enabled="true"
             android:exported="true" />
-        <service
-            android:name=".services.FirebaseMessagingService"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name=".services.MyFirebaseMessagingService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+
+
 
         <activity android:name=".activities.LogInActivity" />
         <activity android:name=".activities.SignUpActivity" />
@@ -54,6 +42,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <service android:name=".activities.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     AppBarConfiguration appBarConfiguration;
     NavController navController;
 
+    public static final String CHANNEL_ID = "simplified_coding";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

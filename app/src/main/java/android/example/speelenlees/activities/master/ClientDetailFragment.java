@@ -30,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 public class ClientDetailFragment extends Fragment implements  View.OnClickListener {
     private static final String TAG = "ClientDetailFragment";
     Client client;
-    TextView tvFirstname, tvLastname, tvBirthdate, tvAddress, tvZipcode, tvCity;
+    TextView tvFirstname, tvLastname, tvBirthdate, tvAddress, tvPostalCode, tvCity;
     ImageView ivProfilePicture;
     private Button btnUpdate, btnDelete;
 
@@ -70,7 +70,7 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
         tvLastname = view.findViewById(R.id.lastname_database);
         tvBirthdate = view.findViewById(R.id.birthdate_database);
         tvAddress = view.findViewById(R.id.address_database);
-        tvZipcode = view.findViewById(R.id.postalCode_database);
+        tvPostalCode = view.findViewById(R.id.postalCode_database);
         tvCity = view.findViewById(R.id.city_database);
         ivProfilePicture = view.findViewById(R.id.iv_profilePic);
         btnUpdate = view.findViewById(R.id.btnUpdate);
@@ -94,7 +94,7 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
         tvLastname.setText(client.getLastname());
         tvBirthdate.setText(client.getBirthdate());
         tvAddress.setText(client.getAddress());
-        tvZipcode.setText(client.getZipcode());
+        tvPostalCode.setText(client.getZipcode());
         tvCity.setText(client.getCity());
 
         fillImageView();

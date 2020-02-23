@@ -7,10 +7,17 @@
     android:orientation="vertical"
     android:id="@+id/homeScreenFragment">
 
-    <ImageView
+
+
+    <Button
+        android:id="@+id/btn_redirect_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo2"
-        android:layout_marginTop="-50dp"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="480dp"
+        android:layout_marginLeft="100dp"
+        android:background="@color/orange"
+        android:text="Naar cliënten overzicht"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

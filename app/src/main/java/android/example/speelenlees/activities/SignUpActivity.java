@@ -32,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        setTitle("Maak nieuw account");
+        setTitle("Registreer nieuw account");
 
         init();
 
@@ -84,12 +84,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(SignUpActivity.this, "Fout bij aanmaken account. Probeer opnieuw", Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "Something went wrong. Account could not be created");
+                    Toast.makeText(SignUpActivity.this, "Fout bij registreren account. Probeer opnieuw", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Something went wrong. No account registered.");
                 }
                 else {
                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                    Log.i(TAG, "Account created successfully");
+                    Log.i(TAG, "Account created");
                     startActivity(intent);
                 }
             }
