@@ -14,7 +14,7 @@
             android:id="@+id/ivUpdateProfilePicture"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@color/warmgray"
+            android:background="@color/darkgray"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="22dp"/>
@@ -28,9 +28,9 @@
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
+            android:textColorHint="@color/darkgray"
             android:backgroundTint="#FFFFFF"
-            android:textCursorDrawable="@color/warmgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange" />
 
         <EditText
@@ -41,9 +41,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
+            android:textColorHint="@color/darkgray"
             android:backgroundTint="#FFFFFF"
-            android:textCursorDrawable="@color/warmgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange" />
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
+            android:textColorHint="@color/darkgray"
             android:textColor="@color/orange" />
 
         <EditText
@@ -67,9 +67,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
+            android:textColorHint="@color/darkgray"
             android:backgroundTint="#FFFFFF"
-            android:textCursorDrawable="@color/warmgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"/>
 
         <EditText
@@ -80,9 +80,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
+            android:textColorHint="@color/darkgray"
             android:backgroundTint="#FFFFFF"
-            android:textCursorDrawable="@color/warmgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"/>
         <EditText
             android:layout_width="match_parent"
@@ -92,9 +92,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
+            android:textColorHint="@color/darkgray"
             android:backgroundTint="#FFFFFF"
-            android:textCursorDrawable="@color/warmgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"/>
 
 
@@ -114,7 +114,7 @@
                 android:layout_marginTop="21dp">
 
                 <Button
-                    android:id="@+id/btnUpdate"
+                    android:id="@+id/btn_update"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="03dp"

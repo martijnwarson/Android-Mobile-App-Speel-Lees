@@ -10,7 +10,7 @@ import android.util.Log;
 import android.example.speelenlees.R;
 
 public class SplashActivity extends AppCompatActivity {
-    private static final String TAG = "SplashActivity";
+    //private static final String TAG = "SplashActivity";
     private static int SPLASH_TIME_OUT = 2000;
 
     @Override
@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
 
-                Log.i(TAG, "Splash screen loaded succesful");
+                //Log.i(TAG, "Splash screen loaded succesful");
             }
         }, SPLASH_TIME_OUT);
     }

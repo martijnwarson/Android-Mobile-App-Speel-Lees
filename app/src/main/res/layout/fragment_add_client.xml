@@ -22,7 +22,7 @@
                 android:id="@+id/ivProfilePicture"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:background="@color/warmgray"
+                android:background="@color/darkgray"
                 />
 
             <TextView
@@ -31,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:hint="Profielfoto"
-                android:textColor="@color/warmgray"
-                android:textColorHint="@color/lightgrayTransparant"
+                android:textColor="@color/darkgray"
+                android:textColorHint="@color/gray"
                 android:textSize="21sp"
                 android:textAlignment="center"/>
         </RelativeLayout>
@@ -46,11 +46,10 @@
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
-            android:backgroundTint="@color/warmgray"
-            android:textCursorDrawable="@color/warmgray"
-            android:textColor="@color/orange"
-            style="@style/editTextDisableEnter"/>
+            android:textColorHint="@color/darkgray"
+            android:backgroundTint="@color/darkgray"
+            android:textCursorDrawable="@color/darkgray"
+            android:textColor="@color/orange"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -60,11 +59,10 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
-            android:backgroundTint="@color/warmgray"
-            android:textCursorDrawable="@color/warmgray"
-            android:textColor="@color/orange"
-            style="@style/editTextDisableEnter"/>
+            android:textColorHint="@color/darkgray"
+            android:backgroundTint="@color/darkgray"
+            android:textCursorDrawable="@color/darkgray"
+            android:textColor="@color/orange"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,7 +74,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
+            android:textColorHint="@color/darkgray"
             android:textColor="@color/orange" />
 
         <EditText
@@ -87,11 +85,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
-            android:backgroundTint="@color/warmgray"
-            android:textCursorDrawable="@color/warmgray"
+            android:textColorHint="@color/darkgray"
+            android:backgroundTint="@color/darkgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"
-            style="@style/editTextDisableEnter"/>
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -101,11 +99,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
-            android:backgroundTint="@color/warmgray"
-            android:textCursorDrawable="@color/warmgray"
+            android:textColorHint="@color/darkgray"
+            android:backgroundTint="@color/darkgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"
-            style="@style/editTextDisableEnter"/>
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -115,12 +113,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
-            android:textColorHint="@color/warmgray"
-            android:backgroundTint="@color/warmgray"
-            android:textCursorDrawable="@color/warmgray"
+            android:textColorHint="@color/darkgray"
+            android:backgroundTint="@color/darkgray"
+            android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"
-            style="@style/editTextDisableEnter"/>
-
+         />
 
 
         <LinearLayout

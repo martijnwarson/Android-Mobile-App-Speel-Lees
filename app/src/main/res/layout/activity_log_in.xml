@@ -9,70 +9,71 @@
     tools:context=".activities.LogInActivity">
 
     <ImageView
+        android:src="@drawable/logo2"
         android:layout_width="290dp"
         android:layout_height="281dp"
         android:layout_marginTop="0dp"
-        android:src="@drawable/logo2"
         android:layout_marginLeft="60dp"
         android:layout_marginBottom="0dp"/>
 
     <EditText
         android:id="@+id/et_email"
-        style="@style/editTextDisableEnter"
-        android:layout_width="263dp"
+        android:hint="@string/email"
+        android:textSize="22sp"
+        android:layout_width="265dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="300dp"
         android:layout_marginLeft="70dp"
-        android:backgroundTint="@color/warmgray"
-        android:hint="Email adres"
+        android:backgroundTint="@color/darkgray"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
         android:textColor="@color/orange"
-        android:textColorHint="@color/warmgray"
-        android:textCursorDrawable="@color/warmgray"
-        android:textSize="22sp" />
+        android:textColorHint="@color/darkgray"
+        android:textCursorDrawable="@color/darkgray"
+         />
 
     <EditText
         android:id="@+id/et_password"
-        style="@style/editTextDisableEnter"
-        android:layout_width="250dp"
+        android:hint="@string/password"
+        android:textSize="22sp"
+        android:layout_marginTop="370dp"
+        android:layout_marginLeft="70dp"
+        android:layout_width="265dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="370dp"
-        android:layout_marginLeft="75dp"
-        android:backgroundTint="@color/warmgray"
-        android:hint="Wachtwoord"
+        android:backgroundTint="@color/darkgray"
         android:inputType="textPassword"
         android:textAlignment="center"
         android:textColor="@color/orange"
-        android:textColorHint="@color/warmgray"
-        android:textCursorDrawable="@color/warmgray"
-        android:textSize="22sp" />
+        android:textColorHint="@color/darkgray"
+        android:textCursorDrawable="@color/darkgray"
+         />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
+        android:text="@string/login"
+        android:layout_width="263dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="480dp"
-        android:layout_marginLeft="170dp"
+        android:layout_marginTop="445dp"
+        android:layout_marginLeft="75dp"
         android:background="@color/orange"
-        android:text="Inloggen"
         android:textColor="#FFFFFF" />
 
     <CheckBox
+        android:id="@+id/cb_remember_me"
+        android:text="@string/remember_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="435dp"
-        android:layout_marginLeft="150dp"
-        android:text="Ingelogd blijven?"
+        android:layout_marginTop="520dp"
+        android:layout_marginLeft="140dp"
         android:paddingLeft="10dp"
-        android:id="@+id/cb_stay_logged_in"
         android:layout_gravity="center"
         android:button="@drawable/checkbox"
         android:textColor="@color/orange"/>
 
+    <!--
     <TextView
         android:id="@+id/tv_no_account"
         android:layout_width="wrap_content"
@@ -83,5 +84,6 @@
         android:text="Geen account? Registreer hier"
         android:textColor="@color/warmgray"
         android:textSize="14sp" />
+        -->
 
 </RelativeLayout>

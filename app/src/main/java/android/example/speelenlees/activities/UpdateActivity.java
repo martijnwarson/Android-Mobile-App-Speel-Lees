@@ -16,7 +16,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,127 +36,88 @@ import java.util.Calendar;
 
 public class UpdateActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    Button btnUpdate;
-    EditText etFirstname, etLastname, etAddress, etZipcode, etCity;
-    TextView tvBirthdate;
-    String clientId, firstname, lastname, address, zipcode, city;
+    StorageReference storage_reference;
+    Uri filePath;
+    String date;
+
+    Button btn_update;
+    EditText et_firstname;
+    EditText et_lastname;
+    EditText et_address;
+    EditText et_zipcode;
+    EditText et_city;
+    TextView tv_birthdate;
+    String clientId;
+    String firstname;
+    String lastname;
+    String address;
+    String zipcode;
+    String city;
     Client client;
     boolean dateSelected;
-    ImageView ivProfilePicture;
-    StorageReference storageReference;
+    ImageView iv_profile_pic;
+
     static final int PICK_IMAGE_REQUEST = 124;
-    Uri filePath;
-    static final String TAG = "UpdateActivity";
-    String date;
+
+    //static final String TAG = "UpdateActivity";
+
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); // terug knop
 
-        init();
-        Log.i(TAG, "Views initialized succesfully");
+       setTitle("Cliënt wijzigen");
 
-        fillFieldsWithData();
+        initialize();
+        //Log.i(TAG, "Views initialized succesfully");
 
-        btnUpdate.setOnClickListener(this);
-        tvBirthdate.setOnClickListener(this);
-        ivProfilePicture.setOnClickListener(this);
+        fillViewWithData();
 
+        iv_profile_pic.setOnClickListener(this);
+        tv_birthdate.setOnClickListener(this);
+        btn_update.setOnClickListener(this);
+
+
+        //Om geboortedatum op te halen
         if (savedInstanceState != null) {
-           restoreSavedInstanceStates(savedInstanceState);
+           //restoreSavedInstanceStates(savedInstanceState);
+            date = savedInstanceState.getString("my_birthdate");
+            String birthdateString = "Geboortedatum: " + date;
+            tv_birthdate.setText(birthdateString);
         }
     }
 
-    private void init() {
-        btnUpdate = findViewById(R.id.btnUpdate);
-        etFirstname = findViewById(R.id.etFirstname);
-        etLastname = findViewById(R.id.etLastname);
-        tvBirthdate = findViewById(R.id.tvDateSelector);
-        etAddress = findViewById(R.id.etAddress);
-        etZipcode = findViewById(R.id.etZipcode);
-        etCity = findViewById(R.id.etCity);
+    private void initialize() {
+        btn_update = findViewById(R.id.btn_update);
+        et_firstname = findViewById(R.id.etFirstname);
+        et_lastname = findViewById(R.id.etLastname);
+        tv_birthdate = findViewById(R.id.tvDateSelector);
+        et_address = findViewById(R.id.etAddress);
+        et_zipcode = findViewById(R.id.etZipcode);
+        et_city = findViewById(R.id.etCity);
         dateSelected = true;
-        ivProfilePicture = findViewById(R.id.ivUpdateProfilePicture);
-        storageReference = FirebaseStorage.getInstance().getReference();
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // Gewijzigde geboortedatum
-        outState.putString("my_birthdate", date);
-    }
-
-    private void restoreSavedInstanceStates(Bundle savedInstanceState) {
-        // Gewijzigde geboortedatum
-        date = savedInstanceState.getString("my_birthdate");
-        String birthdateString = "Geboortedatum: " + date;
-        tvBirthdate.setText(birthdateString);
-    }
-
-    private void fillFieldsWithData() {
-        // Data verzamelen die aan de Intent (vanuit DetailActivity) waren meegegeven
-        clientId = getIntent().getStringExtra("clientId");
-        firstname = getIntent().getStringExtra("firstname");
-        lastname = getIntent().getStringExtra("lastname");
-        date = getIntent().getStringExtra("birthdate");
-        address = getIntent().getStringExtra("address");
-        zipcode = getIntent().getStringExtra("zipcode");
-        city = getIntent().getStringExtra("city");
-
-
-        // Titel van ActionBar aanpassen
-        String titleName = "Wijzig " + firstname + " " + lastname;
-        setTitle(titleName);
-
-        // Verzamelde data in de tekstvakken zetten
-        etFirstname.setText(firstname);
-        etLastname.setText(lastname);
-        String birthdateString = "Geboortedatum: " + date;
-        tvBirthdate.setText(birthdateString);
-        etAddress.setText(address);
-        etZipcode.setText(zipcode);
-        etCity.setText(city);
-
-        // Foto tonen in de imageView
-        fillImageView();
-    }
-
-
-    private void fillImageView() {
-        String imageName = clientId;
-        StorageReference storageRef = storageReference.child(imageName);
-
-        final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                ivProfilePicture.setImageBitmap(bitmap);
-            }
-        });
+        iv_profile_pic = findViewById(R.id.ivUpdateProfilePicture);
+        storage_reference = FirebaseStorage.getInstance().getReference();
     }
 
     public void onClick(View v) {
-        if (v.getId() == R.id.btnUpdate) {
+
+        if (v.getId()  == R.id.tvDateSelector) {
+            // Dialoogvenster tonen om data te selecteren
+            showDatePickerDialog();
+        }  else if (v.getId() == R.id.ivUpdateProfilePicture) {
+            // Dialoogvenster tonen om afbeelding te selecteren
+            showFileChooser();
+        } else  if (v.getId() == R.id.btn_update) {
             // Gegevens van lid wijzigen
             updateMember();
         }
-        else if (v.getId() == R.id.tvDateSelector) {
-            // Dialoogvenster tonen om data te selecteren
-            showDatePickerDialog();
-        }
-        else if (v.getId() == R.id.ivUpdateProfilePicture) {
-            // Dialoogvenster tonen om afbeelding te selecteren
-            showFileChooser();
-        }
+
     }
 
-
-    //Wanneer er op het pijltje in de ActionBar wordt geklikt ...
+    // Back btn in navbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -168,84 +128,61 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateMember() {
-        if (checkUserInputValidity()) {
-           InitializeMember();
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-            new FirebaseDatabaseHelper().updateMember(client);
+        // Gewijzigde geboortedatum
+        outState.putString("my_birthdate", date);
+    }
 
-            Toast.makeText(UpdateActivity.this, client.getFirstname() + " " + client.getLastname() + " is gewijzigd", Toast.LENGTH_LONG).show();
-            Log.i(TAG, "Member updated successfully");
+   /* private void restoreSavedInstanceStates(Bundle savedInstanceState) {
+        // Gewijzigde geboortedatum
+        date = savedInstanceState.getString("my_birthdate");
+        String birthdateString = "Geboortedatum: " + date;
+        tv_birthdate.setText(birthdateString);
+    }*/
 
-           goToMemberListActivity();
-        }
+    private void fillViewWithData() {
+        clientId = getIntent().getStringExtra("clientId");
+        firstname = getIntent().getStringExtra("firstname");
+        lastname = getIntent().getStringExtra("lastname");
+        date = getIntent().getStringExtra("birthdate");
+        address = getIntent().getStringExtra("address");
+        zipcode = getIntent().getStringExtra("zipcode");
+        city = getIntent().getStringExtra("city");
+
+        // Titel van ActionBar aanpassen
+        //String titleName = "Wijzig " + firstname + " " + lastname;
+        //setTitle(titleName);
+
+        // Verzamelde data in de tekstvakken zetten
+        et_firstname.setText(firstname);
+        et_lastname.setText(lastname);
+        et_address.setText(address);
+        et_zipcode.setText(zipcode);
+        et_city.setText(city);
+
+        String birthdateString = "Geboortedatum: " + date;
+        tv_birthdate.setText(birthdateString);
+
+        // Foto tonen in de imageView
+        showImage();
     }
 
 
-    private boolean checkUserInputValidity() {
-        boolean inputIsValid = true;
+    private void showImage() {
+        String image_name = clientId;
+        StorageReference storageReference = storage_reference.child(image_name);
 
-        if (etFirstname.getText().length() < 2) {
-            String firstname = "Voornaam";
-            etFirstname.setError("\"" + firstname + "\" moet minstens 2 karakters hebben");
-            inputIsValid = false;
-        }
-
-        if (etLastname.getText().length() < 2) {
-            String lastname = "Achternaam";
-            etLastname.setError("\"" + lastname + "\" moet minstens 2 karakters hebben");
-            inputIsValid = false;
-        }
-
-        if (!dateSelected) {
-            tvBirthdate.setError("Selecteer uw geboortedatum");
-            inputIsValid = false;
-        }
-
-        if (etAddress.getText().length() < 5) {
-            String address = "Straat + huisnummer";
-            etAddress.setError("\"" + address + "\" moet minstens 5 karakters hebben");
-            inputIsValid = false;
-        }
-
-        boolean postalCodeIsNumber = true;
-       /* try {
-            Integer.parseInt(etZipcode.getText().toString());
-        } catch (NumberFormatException e) {
-            postalCodeIsNumber = false;
-        }
-        if (etZipcode.getText().length() != 5 || !postalCodeIsNumber) {
-            String zipcode = "Postcode";
-            etZipcode.setError("\"" + zipcode + "\" moet een getal bestaande uit 4 cijfers zijn");
-            inputIsValid = false;
-        }*/
-
-        if (etCity.getText().length() < 2) {
-            String city = "Gemeente";
-            etCity.setError("\"" + city + "\" moet minstens 2 karakters hebben");
-            inputIsValid = false;
-        }
-
-        if (inputIsValid) {
-            Log.i(TAG, "Fields fileld in correctly");
-        } else {
-            Log.e(TAG, "Fields not filled in correctly");
-        }
-
-        return inputIsValid;
-    }
-
-    private void InitializeMember() {
-        client = new Client();
-        client.setClientId(clientId);
-        client.setFirstname(etFirstname.getText().toString().trim());
-        client.setLastname(etLastname.getText().toString().trim());
-        client.setAddress(etAddress.getText().toString().trim());
-        String birthdateTextView = tvBirthdate.getText().toString().trim();
-        date = birthdateTextView.substring(15);
-        client.setBirthdate(date);
-        client.setZipcode(etZipcode.getText().toString().trim());
-        client.setCity(etCity.getText().toString().trim());
+        final long ONE_MEGABYTE = 1024 * 1024;
+        storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                iv_profile_pic.setImageBitmap(bitmap);
+            }
+        });
     }
 
     private void showDatePickerDialog() {
@@ -259,22 +196,115 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    // Deze methode wordt opgeroepen wanneer een datum geselecteerd wordt in de DatePickerDialog()-methode
+    private void updateMember() {
+        if (checkUserInputValidity()) {
+           //InitializeMember();
+
+            //Client maken
+            client = new Client();
+            client.setClientId(clientId);
+            client.setFirstname(et_firstname.getText().toString().trim());
+            client.setLastname(et_lastname.getText().toString().trim());
+            client.setAddress(et_address.getText().toString().trim());
+            String birthdateTextView = tv_birthdate.getText().toString().trim();
+            date = birthdateTextView.substring(15);
+            client.setBirthdate(date);
+            client.setZipcode(et_zipcode.getText().toString().trim());
+            client.setCity(et_city.getText().toString().trim());
+
+            new FirebaseDatabaseHelper().updateClient(client);
+
+            Toast.makeText(UpdateActivity.this, client.getFirstname() + " " + client.getLastname() + " is gewijzigd", Toast.LENGTH_LONG).show();
+           // Log.i(TAG, "Member updated successfully");
+
+           goToMemberListActivity();
+        }
+    }
+
+
+    private boolean checkUserInputValidity() {
+        boolean bool = true;
+
+        if (et_firstname.getText().length() < 2) {
+            String firstname = "Voornaam";
+            et_firstname.setError("\"" + firstname + "\" dient minstens 2 karakters te hebben");
+            bool = false;
+        }
+
+        if (et_lastname.getText().length() < 2) {
+            String lastname = "Achternaam";
+            et_lastname.setError("\"" + lastname + "\" dint minstens 2 karakters te hebben");
+            bool = false;
+        }
+
+        /*if (!dateSelected) {
+            tv_birthdate.setError("U dient een geboortedatum te kiezen");
+            inputIsValid = false;
+        }*/
+
+        /*
+        if (et_address.getText().length() < 5) {
+            String address = "Straat + huisnummer";
+            et_address.setError("\"" + address + "\" moet minstens 5 karakters hebben");
+            inputIsValid = false;
+        }*/
+
+        //boolean postalCodeIsNumber = true;
+       /* try {
+            Integer.parseInt(et_zipcode.getText().toString());
+        } catch (NumberFormatException e) {
+            postalCodeIsNumber = false;
+        }
+        if (et_zipcode.getText().length() != 5 || !postalCodeIsNumber) {
+            String zipcode = "Postcode";
+            et_zipcode.setError("\"" + zipcode + "\" moet een getal bestaande uit 4 cijfers zijn");
+            inputIsValid = false;
+        }*/
+
+       /*
+        if (et_city.getText().length() < 2) {
+            String city = "Gemeente";
+            et_city.setError("\"" + city + "\" moet minstens 2 karakters hebben");
+            inputIsValid = false;
+        }
+
+        if (inputIsValid) {
+            //Log.i(TAG, "Fields fileld in correctly");
+        } else {
+            //Log.e(TAG, "Fields not filled in correctly");
+        }*/
+
+        return bool;
+    }
+
+    private void InitializeMember() {
+        client = new Client();
+        client.setClientId(clientId);
+        client.setFirstname(et_firstname.getText().toString().trim());
+        client.setLastname(et_lastname.getText().toString().trim());
+        client.setAddress(et_address.getText().toString().trim());
+        String birthdateTextView = tv_birthdate.getText().toString().trim();
+        date = birthdateTextView.substring(15);
+        client.setBirthdate(date);
+        client.setZipcode(et_zipcode.getText().toString().trim());
+        client.setCity(et_city.getText().toString().trim());
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Log.i(TAG, "Date selected successfully");
+       // Log.i(TAG, "Date selected successfully");
         dateSelected = true;
-        tvBirthdate.setError(null);
+        tv_birthdate.setError(null);
         date = "" + dayOfMonth + "/" + (month + 1) + "/" + year;
         String result = "Geboortedatum: " + date;
-        tvBirthdate.setText(result);
+        tv_birthdate.setText(result);
     }
 
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Selecteer een afbeelding"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Kies een afbeelding"), PICK_IMAGE_REQUEST);
     }
 
 
@@ -291,7 +321,7 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
             // Toon geselecteerde afbeelding in ImageView
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                ivProfilePicture.setImageBitmap(bitmap);
+                iv_profile_pic.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -302,18 +332,18 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     private void uploadPicture() {
         if (filePath != null) {
             String pictureName = clientId;
-            storageReference = storageReference.child(pictureName);
+            storage_reference = storage_reference.child(pictureName);
 
-            storageReference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storage_reference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.i(TAG, "Image uploaded to Firebase Storage successfully");
+                    //Log.i(TAG, "Image uploaded to Firebase Storage successfully");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(UpdateActivity.this, "Er is iets fout gegaan bij het uploaden van de profielfoto. Probeer opnieuw", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Something went wrong uploading the picture to Firebase Storage");
+                    //Log.e(TAG, "Something went wrong uploading the picture to Firebase Storage");
                 }
             });
         }

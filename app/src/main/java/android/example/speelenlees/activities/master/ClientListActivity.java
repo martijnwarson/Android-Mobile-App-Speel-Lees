@@ -22,7 +22,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 import android.example.speelenlees.R;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,90 +32,101 @@ import android.widget.TextView;
 //RECYCLERVIEW
 public class ClientListActivity extends AppCompatActivity {
     private boolean twoPanes;
-    private static final String TAG = "ClientsListActivity";
+    //private static final String TAG = "ClientsListActivity";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clients_list);
-
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Back-knop
-
-        // Titel van Actionbar instellen
-        setTitle("Cliënten overzicht");
-
-        if (checkLandscapeMode()) {
-            Log.i(TAG, "In landscape mode");
-            twoPanes = true;
-        }
-
-        // Recyclerview declareren en implementeren om lijst te maken
-        View recyclerView = findViewById(R.id.rv_clientsList);
-        assert recyclerView != null;
-        Log.i(TAG, "Recyclerview declared");
-
-        readMembers((RecyclerView) recyclerView);
-    }
-
-    // Wanneer er op het pijltje in de ActionBar wordt geklikt ...
+    // Terug-knop functie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Log.i(TAG, "Back-button clicked");
-
-            // Intent terug naar MainActivity
+            //Log.i(TAG, "Back-button clicked");
             startActivity(new Intent(ClientListActivity.this, HomeActivity.class));
-            Log.i(TAG, "Went back to previous activity");
+            //Log.i(TAG, "Went back to previous activity");
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean checkLandscapeMode() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_clients_list); //bind activity_clients_list
+        setTitle("Cliënten overzicht"); //Titel
+
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Terug-knop
+
+        //Controleren of smartphone in portrait of landscape mode is
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            //Log.i(TAG, "In Landscape mode");
+            twoPanes = false;
+        } else {
+            //Log.i(TAG, "In Portait mode");
+            twoPanes = true;
+
+        }
+
+        /*if (checkLandscapeMode()) {
+            //Log.i(TAG, "In landscape mode");
+            twoPanes = true;
+        }*/
+
+        // Recyclerview declareren en implementeren om lijst te maken
+        View recyclerView = findViewById(R.id.rv_clients_list); //clients list binden
+        assert recyclerView != null; //recyclerview mag niet leeg zijn
+        // Log.i(TAG, "Recyclerview declared");
+
+        getDataFromFirebase((RecyclerView) recyclerView);
+    }
+
+
+    /*private boolean checkLandscapeMode() {
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.i(TAG, "In Landscape mode");
+            //Log.i(TAG, "In Landscape mode");
 
             return true;
         } else {
-            Log.i(TAG, "In Portait mode");
+            //Log.i(TAG, "In Portait mode");
 
             return false;
         }
-    }
+    }*/
 
-    // Members uit Firebase Database halen
-    private void readMembers(final RecyclerView recyclerView) {
+    // Data ophalen uit Firebase
+    private void getDataFromFirebase(final RecyclerView recyclerView) {
         new FirebaseDatabaseHelper().readClients(new DataStatus() {
             @Override
             public void DataIsLoaded(List<Client> clients, List<String> keys) {
-                Log.i(TAG, "Members loaded from Firebase Database successfully");
-                setupRecyclerView(recyclerView, clients, keys);
+               // Log.i(TAG, "Members loaded from Firebase Database successfully");
+                setupRecyclerView(recyclerView, clients, keys); //clients en keys zijn data uit firebase
             }
         });
     }
 
+    //Recyclerview opbouwen
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Client> clients, List<String> keys) {
-        recyclerView.setAdapter(new MemberRecyclerViewAdapter(this, clients, keys, twoPanes ));
+        recyclerView.setAdapter(new ClientsRecyclerViewAdapter(this, clients, keys, twoPanes ));
 
-        Log.i(TAG, "Adapter set to RecyclerView successfully");
+        //Log.i(TAG, "Adapter set to RecyclerView successfully");
     }
 
 
-    public static class MemberRecyclerViewAdapter extends RecyclerView.Adapter<MemberRecyclerViewAdapter.ViewHolder> {
-        private final ClientListActivity parentActivity;
-        private final List<Client> clients;
+    //Gegevens in de recyclerview steken (adapter)
+    public static class ClientsRecyclerViewAdapter extends RecyclerView.Adapter<ClientsRecyclerViewAdapter.ViewHolder> {
+        private final ClientListActivity clientListActivity;
         private final List<String> keys;
-        private final boolean twoPanes;
+        private final List<Client> clients;
 
-        MemberRecyclerViewAdapter(ClientListActivity parent, List<Client> clients, List<String> keys, boolean twoPanes) {
-            this.parentActivity = parent;
+        private final boolean twoPanes; // landscape vs portrait
+
+        ClientsRecyclerViewAdapter(ClientListActivity parent, List<Client> clients, List<String> keys, boolean twoPanes) {
+            this.clientListActivity = parent;
             this.clients = clients;
             this.keys = keys;
             this.twoPanes = twoPanes;
 
-            Log.i(TAG, "Adapter constructed successfully");
+            //Log.i(TAG, "Adapter constructed successfully");
         }
 
         @NonNull
@@ -128,12 +138,9 @@ public class ClientListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-            // Per MemberItem in de RecyclerView worden foto, naam en instrument getoond
-            // Naam
             String name = clients.get(position).getFirstname() + " " + clients.get(position).getLastname();
-            holder.fullname.setText(name);
+            holder.full_name.setText(name);
 
-            //Profielfoto
             String imageName = clients.get(position).getClientId();
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(imageName);
 
@@ -142,15 +149,14 @@ public class ClientListActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    holder.iv_profilepic.setImageBitmap(bitmap);
+                    holder.iv_profile_pic.setImageBitmap(bitmap);
                 }
             });
 
-            // OnClickListener op het volledig item zetten
             holder.itemView.setTag(clients.get(position));
             holder.itemView.setOnClickListener(onClickListener);
 
-            Log.i(TAG, "View within RecyclerViewList created successfully");
+            //Log.i(TAG, "View within RecyclerViewList created successfully");
         }
 
         @Override
@@ -163,53 +169,48 @@ public class ClientListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Client client = (Client) v.getTag();
 
-                if (twoPanes) {
-                    // LANDSCAPE
-                    Bundle arguments = new Bundle();
+                if (twoPanes) { // Landscape
+                    Bundle bundle = new Bundle();
 
-                    // Gegegens meegeven aan fragment a.d.h.v. arguments
-                    arguments.putString("clientId", client.getClientId());
-                    arguments.putString("firstname", client.getFirstname());
-                    arguments.putString("lastname", client.getLastname());
-                    arguments.putString("birthdate", client.getBirthdate());
-                    arguments.putString("address", client.getAddress());
-                    arguments.putString("postalCode", client.getZipcode());
-                    arguments.putString("city", client.getCity());
+                    bundle.putString("clientId", client.getClientId());
+                    bundle.putString("firstname", client.getFirstname());
+                    bundle.putString("lastname", client.getLastname());
+                    bundle.putString("birthdate", client.getBirthdate());
+                    bundle.putString("address", client.getAddress());
+                    bundle.putString("postalCode", client.getZipcode());
+                    bundle.putString("city", client.getCity());
 
-                    // MemberDetailFragment openen
                     ClientDetailFragment fragment = new ClientDetailFragment();
-                    fragment.setArguments(arguments);
-                    parentActivity.getSupportFragmentManager().beginTransaction()
+                    fragment.setArguments(bundle);
+                    clientListActivity.getSupportFragmentManager().beginTransaction()
                             .replace(R.id.client_detail_frame, fragment)
                             .commit();
                 } else {
-                    // PORTRAIT
+                    // Portrait
                     Context context = v.getContext();
-                    Intent intentToMemberDetailActivity = new Intent(context, ClientDetailActivity.class);
+                    Intent intent = new Intent(context, ClientDetailActivity.class);
 
-                    // Gegevens meegeven aan de intent
-                    intentToMemberDetailActivity.putExtra("clientId", client.getClientId());
-                    intentToMemberDetailActivity.putExtra("firstname", client.getFirstname());
-                    intentToMemberDetailActivity.putExtra("lastname", client.getLastname());
-                    intentToMemberDetailActivity.putExtra("birthdate", client.getBirthdate());
-                    intentToMemberDetailActivity.putExtra("address", client.getAddress());
-                    intentToMemberDetailActivity.putExtra("postalCode", client.getZipcode());
-                    intentToMemberDetailActivity.putExtra("city", client.getCity());
+                    intent.putExtra("clientId", client.getClientId());
+                    intent.putExtra("firstname", client.getFirstname());
+                    intent.putExtra("lastname", client.getLastname());
+                    intent.putExtra("birthdate", client.getBirthdate());
+                    intent.putExtra("address", client.getAddress());
+                    intent.putExtra("postalCode", client.getZipcode());
+                    intent.putExtra("city", client.getCity());
 
-                    // DetailActivity openen
-                    context.startActivity(intentToMemberDetailActivity);
+                    context.startActivity(intent);  // DetailActivity openen
                 }
             }
         };
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView iv_profilepic;
-            TextView fullname;
+            ImageView iv_profile_pic;
+            TextView full_name;
 
             ViewHolder(View view) {
                 super(view);
-                iv_profilepic = view.findViewById(R.id.iv_profilePic);
-                fullname = view.findViewById(R.id.tv_clientFullName);
+                iv_profile_pic = view.findViewById(R.id.iv_profile_pic);
+                full_name = view.findViewById(R.id.tv_client_full_name);
             }
         }
     }

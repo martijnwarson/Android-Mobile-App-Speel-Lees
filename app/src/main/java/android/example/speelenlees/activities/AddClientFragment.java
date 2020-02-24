@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,112 +35,158 @@ import java.util.Calendar;
 
 public class AddClientFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
     private View root;
-    private EditText etFirstname, etLastname, etAddress, etPostalCode, etCity;
-    private TextView tvDisplayDate, tvImageSelector;
-    private ImageView ivProfilePicture;
-    private Button btnRegister;
-    private FirebaseDatabaseHelper databaseHelper;
+    private EditText et_firstname;
     private Client client;
     private String date;
-    private boolean dateSelected, imageSelected;
+    private ImageView iv_profile_pic;
+    private Button btn_register;
+    private FirebaseDatabaseHelper firebaseDatabaseHelper;
+    private StorageReference storageReference;
+
+    EditText et_lastname;
+    EditText et_address;
+    EditText et_zipcode;
+    EditText et_city;
+    TextView tv_date;
+    TextView tv_image_selector;
+
+
+    private boolean dateSelected;
+    private boolean imageSelected;
     private static final int PICK_IMAGE_REQUEST = 123; // random nummer
     private Uri image;
-    private StorageReference storageReference;
-    private static final String TAG = "InsertFragment";
+
+    //private static final String TAG = "InsertFragment";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_add_client, container, false);
 
-        init();
-        Log.i(TAG, "Initialized successfully");
+        initialize();
+        //Log.i(TAG, "Initialized successfully");
+        iv_profile_pic.setOnClickListener(this);
+        tv_date.setOnClickListener(this);
+        btn_register.setOnClickListener(this);
 
-        tvDisplayDate.setOnClickListener(this);
-        btnRegister.setOnClickListener(this);
-        ivProfilePicture.setOnClickListener(this);
 
         if (savedInstanceState != null) {
-            restoreSavedInstanceStates(savedInstanceState);
+           // restoreSavedInstanceStates(savedInstanceState);
+            tv_date.setText(savedInstanceState.getString("my_birthdate_string"));
+            dateSelected = savedInstanceState.getBoolean("my_birthdate_boolean");
+            date = savedInstanceState.getString("my_birthdate");
+            imageSelected = savedInstanceState.getBoolean("my_profilepicture_boolean");
+            image = savedInstanceState.getParcelable("my_profilepicture");
 
-            Log.i(TAG, "All instance states restored successfully");
+            if (image != null) {
+                iv_profile_pic.setImageURI(image);
+                tv_image_selector.setVisibility(View.INVISIBLE);
+            }
+
+            //Log.i(TAG, "All instance states restored successfully");
         }
 
         return root;
     }
 
-    private void init() {
-        etFirstname = root.findViewById(R.id.etFirstname);
-        etLastname = root.findViewById(R.id.etLastname);
-        tvDisplayDate = root.findViewById(R.id.tvDateSelector);
-        etAddress = root.findViewById(R.id.etAddress);
-        etPostalCode = root.findViewById(R.id.etPostcalCode);
-        etCity = root.findViewById(R.id.etCity);
-        ivProfilePicture = root.findViewById(R.id.ivProfilePicture);
-        btnRegister = root.findViewById(R.id.btnRegister);
-        databaseHelper = new FirebaseDatabaseHelper();
-        client = new Client();
-        tvImageSelector = root.findViewById(R.id.tvImageSelector);
-        storageReference = FirebaseStorage.getInstance().getReference();
+    public void onClick(View v) {
+        if (v.getId() == R.id.tvDateSelector) {
+            // Datum selecteren
+            //Log.i(TAG, "Date selector clicked");
+
+            showDatePicker();
+        }
+        else if (v.getId() == R.id.ivProfilePicture) {
+            // Dialoogvenster openen om afbeelding te selecteren
+            // Log.i(TAG, "Profile picture selector clicked");
+
+            showFileChooser();
+        }
+        else if (v.getId() == R.id.btnRegister) {
+            // Lid toevoegen aan de database
+            // Log.i(TAG, "Register button clicked");
+
+            addClient();
+        }
+
     }
 
-    // Sla instance states op bij het wijzigen van orientation
+    private void initialize() {
+        client = new Client();
+        firebaseDatabaseHelper = new FirebaseDatabaseHelper();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        tv_image_selector = root.findViewById(R.id.tvImageSelector);
+        et_firstname = root.findViewById(R.id.etFirstname);
+        et_lastname = root.findViewById(R.id.etLastname);
+        tv_date = root.findViewById(R.id.tvDateSelector);
+        et_address = root.findViewById(R.id.etAddress);
+        et_zipcode = root.findViewById(R.id.etPostcalCode);
+        et_city = root.findViewById(R.id.etCity);
+        iv_profile_pic = root.findViewById(R.id.ivProfilePicture);
+        btn_register = root.findViewById(R.id.btnRegister);
+
+
+    }
+
+    // Bij draaien van portrait naar landscape moeten de gegevens opgeslagen worden
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // Geboortedatum
-        outState.putString("my_birthdate_string", tvDisplayDate.getText().toString());
+        outState.putString("my_birthdate_string", tv_date.getText().toString());
         outState.putBoolean("my_birthdate_boolean", dateSelected);
         outState.putString("my_birthdate", date);
 
-        // Profielfoto
         outState.putBoolean("my_profilepicture_boolean", imageSelected);
         outState.putParcelable("my_profilepicture", image);
 
-        Log.i(TAG, "All instance states saved successfully");
+        //Log.i(TAG, "All instance states saved successfully");
     }
 
     // Laad opgeslagen instance states in
-    private void restoreSavedInstanceStates(Bundle savedInstanceState) {
-        // Geboortedatum
-        tvDisplayDate.setText(savedInstanceState.getString("my_birthdate_string"));
+    /*private void restoreSavedInstanceStates(Bundle savedInstanceState) {
+
+        tv_date.setText(savedInstanceState.getString("my_birthdate_string"));
         dateSelected = savedInstanceState.getBoolean("my_birthdate_boolean");
         date = savedInstanceState.getString("my_birthdate");
 
-        // Profielfoto
+
         imageSelected = savedInstanceState.getBoolean("my_profilepicture_boolean");
         image = savedInstanceState.getParcelable("my_profilepicture");
         if (image != null) {
-            ivProfilePicture.setImageURI(image);
-            tvImageSelector.setVisibility(View.INVISIBLE);
+            iv_profile_pic.setImageURI(image);
+            tv_image_selector.setVisibility(View.INVISIBLE);
         }
 
-        Log.i(TAG, "All instances restored successfully");
-    }
+        //Log.i(TAG, "All instances restored successfully");
+    }*/
 
-    public void onClick(View v) {
-        if (v.getId() == R.id.tvDateSelector) {
-            // Datum selecteren
-            Log.i(TAG, "Date selector clicked");
+    private void addClient() {
+        if (checkUserInputValidity()) {
+            //Initialize();
+            //Cliënt aanmaken
+            client.setFirstname(et_firstname.getText().toString().trim());
+            client.setLastname(et_lastname.getText().toString().trim());
+            client.setBirthdate(date);
+            client.setAddress(et_address.getText().toString().trim());
+            client.setZipcode(et_zipcode.getText().toString().trim());
+            client.setCity(et_city.getText().toString().trim());
+            // Log.i(TAG, "Member initialized successfully");
 
-            showDatePickerDialog();
-        }
-        else if (v.getId() == R.id.btnRegister) {
-            // Lid toevoegen aan de database
-            Log.i(TAG, "Register button clicked");
+            // Lid toevoegen aan database
+            firebaseDatabaseHelper.addClient(client);
+            // Log.i(TAG, "Member added to Firebase Database successfully");
 
-            addMember();
-        }
-        else if (v.getId() == R.id.ivProfilePicture) {
-            // Dialoogvenster openen om afbeelding te selecteren
-            Log.i(TAG, "Profile picture selector clicked");
+            saveProfilePic();
 
-            showFileChooser();
+            // Wanneer lid succesvol is toegevoegd aan database...
+            Toast.makeText(getActivity(), client.getFirstname() + " " + client.getLastname() + " is toegevoegd", Toast.LENGTH_LONG).show();
+            goToMainActivity();
         }
     }
 
     // Dialoogvenster tonen om een datum te selecteren
-    private void showDatePickerDialog() {
+    private void showDatePicker() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -150,102 +195,21 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
         DatePickerDialog dialog = new DatePickerDialog(getContext(), AlertDialog.THEME_HOLO_LIGHT, this, year, month, day);
         dialog.show();
 
-        Log.i(TAG, "DatePicker opened successfully.");
+       // Log.i(TAG, "DatePicker opened successfully.");
     }
 
-    // Deze methode wordt opgeroepen wanneer een datum geselecteerd wordt in de showDatePickerDialog()-methode
+    // Deze methode wordt opgeroepen wanneer een datum geselecteerd wordt in de showDatePicker()-methode
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Log.i(TAG, "Date selected successfully");
+        //Log.i(TAG, "Date selected successfully");
 
         dateSelected = true;
-        tvDisplayDate.setError(null);
+        tv_date.setError(null);
 
         date = "" + dayOfMonth + "/" + (month + 1) + "/" + year;
 
         String result = "Geboortedatum: " + date;
-        tvDisplayDate.setText(result);
-    }
-
-    private void addMember() {
-        if (checkUserInputValidity()) {
-            InitializeMember();
-            Log.i(TAG, "Member initialized successfully");
-
-            // Lid toevoegen aan database
-            databaseHelper.addClient(client);
-            Log.i(TAG, "Member added to Firebase Database successfully");
-
-            uploadProfilePicture();
-
-            // Wanneer lid succesvol is toegevoegd aan database...
-            Toast.makeText(getActivity(), client.getFirstname() + " " + client.getLastname() + " is toegevoegd", Toast.LENGTH_LONG).show();
-            goToMainActivity();
-        }
-    }
-
-    private boolean checkUserInputValidity() {
-        boolean inputIsValid = true;
-
-        if (etFirstname.getText().length() < 2) {
-            String firstname = "Voornaam";
-            etFirstname.setError("\"" + firstname + "\" moet minstens 2 karakters hebben");
-            inputIsValid = false;
-        }
-
-        if (etLastname.getText().length() < 2) {
-            String lastname = "Achternaam";
-            etLastname.setError("\"" + lastname + "\" moet minstens 2 karakters hebben");
-            inputIsValid = false;
-        }
-
-        if (!dateSelected) {
-            tvDisplayDate.setError("Selecteer uw geboortedatum");
-            inputIsValid = false;
-        }
-
-        if (etAddress.getText().length() < 5) {
-            String address = "Adres";
-            etAddress.setError("\"" + address + "\" moet minstens 5 karakters hebben");
-            inputIsValid = false;
-        }
-
-        boolean postalCodeIsNumber = true;
-        try {
-            Integer.parseInt(etPostalCode.getText().toString());
-        } catch (NumberFormatException e) {
-            postalCodeIsNumber = false;
-        }
-        if (etPostalCode.getText().length() != 4 || !postalCodeIsNumber) {
-            String postalCode = "Postcode";
-            etPostalCode.setError("\"" + postalCode + "\" moet een getal bestaande uit 4 cijfers zijn");
-            inputIsValid = false;
-        }
-
-        if (etCity.getText().length() < 2) {
-            String city = "Stad";
-            etCity.setError("\"" + city + "\" moet minstens 2 karakters hebben");
-            inputIsValid = false;
-        }
-
-
-        if (!imageSelected) {
-            tvImageSelector.setError("Selecteer een afbeelding");
-            inputIsValid = false;
-        }
-
-        if (inputIsValid) {
-            Log.i(TAG, "Input is valid");
-        } else {
-            Log.w(TAG, "Input is not valid");
-        }
-
-        return inputIsValid;
-    }
-
-    private void goToMainActivity() {
-        Intent intentToMainActivity = new Intent(getActivity(), ClientListActivity.class);
-        startActivity(intentToMainActivity);
+        tv_date.setText(result);
     }
 
     private void showFileChooser() {
@@ -253,8 +217,77 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Selecteer een afbeelding"), PICK_IMAGE_REQUEST);
-        Log.i(TAG, "Filechooser opened successfully");
+        // Log.i(TAG, "Filechooser opened successfully");
     }
+
+
+    private boolean checkUserInputValidity() {
+        boolean bool = true;
+
+        if (et_firstname.getText().length() < 2) {
+            String firstname = "Voornaam";
+            et_firstname.setError("\"" + firstname + "\" dient minstens 2 karakters te hebben");
+            bool = false;
+        }
+
+        if (et_lastname.getText().length() < 2) {
+            String lastname = "Achternaam";
+            et_lastname.setError("\"" + lastname + "\" dient minstens 2 karakters te hebben");
+            bool = false;
+        }
+
+        if (!dateSelected) {
+            tv_date.setError("Selecteer uw geboortedatum");
+            bool = false;
+        }
+
+        /*if (et_address.getText().length() < 5) {
+            String address = "Adres";
+            et_address.setError("\"" + address + "\" moet minstens 5 karakters hebben");
+            inputIsValid = false;
+        }
+
+        boolean postalCodeIsNumber = true;
+        try {
+            Integer.parseInt(et_zipcode.getText().toString());
+        } catch (NumberFormatException e) {
+            postalCodeIsNumber = false;
+        }
+        if (et_zipcode.getText().length() != 4 || !postalCodeIsNumber) {
+            String postalCode = "Postcode";
+            et_zipcode.setError("\"" + postalCode + "\" moet een getal bestaande uit 4 cijfers zijn");
+            inputIsValid = false;
+        }
+
+        if (et_city.getText().length() < 2) {
+            String city = "Stad";
+            et_city.setError("\"" + city + "\" moet minstens 2 karakters hebben");
+            inputIsValid = false;
+        }
+
+
+        if (!imageSelected) {
+            tv_image_selector.setError("Selecteer een afbeelding");
+            inputIsValid = false;
+        }
+
+         */
+
+        /*if (inputIsValid) {
+            //Log.i(TAG, "Input is valid");
+        } else {
+           // Log.w(TAG, "Input is not valid");
+        }*/
+
+        return bool;
+    }
+
+    private void goToMainActivity() {
+        Intent intentToMainActivity = new Intent(getActivity(), ClientListActivity.class);
+        startActivity(intentToMainActivity);
+    }
+
+
 
     // Deze methode wordt uitgevoerd als de gebruiker een afbeelding geselecteerd heeft in showFileChooser()-methode
     @Override
@@ -262,27 +295,26 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
-            Log.i(TAG, "Image selected successfully");
+           // Log.i(TAG, "Image selected successfully");
             image = data.getData();
-            tvImageSelector.setVisibility(View.INVISIBLE);
-            ivProfilePicture.setImageURI(image);
-            tvImageSelector.setError(null);
+            tv_image_selector.setVisibility(View.INVISIBLE);
+            iv_profile_pic.setImageURI(image);
+            tv_image_selector.setError(null);
             imageSelected = true;
         }
     }
 
-    private void InitializeMember() {
-        client.setFirstname(etFirstname.getText().toString().trim());
-        client.setLastname(etLastname.getText().toString().trim());
+    private void Initialize() {
+        client.setFirstname(et_firstname.getText().toString().trim());
+        client.setLastname(et_lastname.getText().toString().trim());
         client.setBirthdate(date);
-        client.setAddress(etAddress.getText().toString().trim());
-        client.setZipcode(etPostalCode.getText().toString().trim());
-        client.setCity(etCity.getText().toString().trim());
+        client.setAddress(et_address.getText().toString().trim());
+        client.setZipcode(et_zipcode.getText().toString().trim());
+        client.setCity(et_city.getText().toString().trim());
 
     }
 
-    // Profielfoto uploaden naar Firebase Storage
-    private void uploadProfilePicture() {
+    private void saveProfilePic() {
         if (image != null) {
             String pictureName = client.getClientId();
             storageReference = storageReference.child(pictureName);
@@ -290,15 +322,15 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
             storageReference.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                // @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.i(TAG, "Image selected successfully");
+                   // Log.i(TAG, "Image selected successfully");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     // Foto toevoegen aan storage = mislukt
-                    Toast.makeText(getContext(), "Er is iets fout gegaan bij het uploaden van de profielfoto. Probeer opnieuw", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Foto opslaan mislukt.", Toast.LENGTH_SHORT).show();
 
-                    Log.e(TAG, "Something went wrong uploading the image to Firebase Storage");
+                   // Log.e(TAG, "Something went wrong uploading the image to Firebase Storage");
                 }
             });
         }

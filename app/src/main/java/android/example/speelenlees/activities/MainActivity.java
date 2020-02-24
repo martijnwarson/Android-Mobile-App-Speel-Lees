@@ -14,8 +14,9 @@ import android.util.Log;
 import android.example.speelenlees.R;
 import android.view.Menu;
 
+//NAVBAR
 public class MainActivity extends AppCompatActivity {
-    static final String TAG = "MainActivity";
+    //static final String TAG = "MainActivity";
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        Log.i(TAG, "Views initialized");
+        //Log.i(TAG, "Views initialized");
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
         setSupportActionBar(toolbar);

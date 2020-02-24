@@ -7,9 +7,10 @@
     tools:context="android.example.speelenlees.activities.master.ClientListActivity">
 
     <FrameLayout
+        android:id="@+id/layout_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/layout_rv">
+        >
 
         <include layout="@layout/clients_list"/>
     </FrameLayout>

@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.example.speelenlees.R;
 import android.example.speelenlees.activities.master.ClientDetailActivity;
-import android.example.speelenlees.activities.master.ClientDetailFragment;
 import android.example.speelenlees.activities.master.ClientListActivity;
 import android.example.speelenlees.domain.Client;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,9 +76,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            fullname = (TextView) itemView.findViewById(R.id.tv_clientFullName);
-            birthdate = (TextView) itemView.findViewById(R.id.tv_clientBirthdate);
-            profilePic = (ImageView) itemView.findViewById(R.id.iv_profilePic);
+            fullname = (TextView) itemView.findViewById(R.id.tv_client_full_name);
+            birthdate = (TextView) itemView.findViewById(R.id.tv_client_birthdate);
+            profilePic = (ImageView) itemView.findViewById(R.id.iv_profile_pic);
 
             mainLayout = itemView.findViewById(R.id.clientContentList);
         }

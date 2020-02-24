@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.example.speelenlees.R;
 import android.example.speelenlees.activities.master.ClientListActivity;
 
-//Pagina wat gebruikt wordt voor redirect
+//Pagina wat gebruikt wordt voor redirect naar recyclerview
 public class MasterDetailFragment extends Fragment {
     public MasterDetailFragment() {
     }
@@ -24,7 +24,7 @@ public class MasterDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        startActivity(new Intent(this.getContext(), ClientListActivity.class));
+        startActivity(new Intent(this.getContext(), ClientListActivity.class)); //ga naar ClientListActivity
         return inflater.inflate(R.layout.fragment_master_detail, container, false);
     }
 }

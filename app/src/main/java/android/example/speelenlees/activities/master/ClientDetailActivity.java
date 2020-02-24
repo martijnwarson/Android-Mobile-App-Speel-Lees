@@ -10,7 +10,6 @@ import android.example.speelenlees.domain.Client;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,69 +24,85 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-// PORTRAIT
+// CLIENT DETAILS - PORTRAIT
 public class ClientDetailActivity extends AppCompatActivity implements View.OnClickListener {
     Client client;
-    Button btnUpdate, btnDelete;
-    TextView tv_birthdate, tv_firstname, tv_lastname, tvAddress, tvPostalCode, tvCity;
-    String clientId, firstname, lastname, birthdate, profilePic, address, zipcode, city;
+    Button btnUpdate;
+    //Button btnDelete;
+    TextView tv_birthdate;
+    TextView tv_firstname;
+    TextView tv_lastname;
+    TextView tv_address;
+    TextView tv_zipcode;
+    TextView tv_city;
+    String clientId;
+    String firstname;
+    String lastname;
+    String birthdate;
+    String profilePic;
+    String address;
+    String zipcode;
+    String city;
     StorageReference storageReference;
-    ImageView iv_ProfilePicture;
-    private static final String TAG = "ClientDetailActivity";
+    ImageView iv_profile_pic;
+    //private static final String TAG = "ClientDetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.client_detail);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Back btn
+        setContentView(R.layout.client_detail); //bind
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); // terug-knop
 
-        Log.i(TAG, "Portrait view succeed");
+        //Log.i(TAG, "Portrait view succeed");
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Intent intent = new Intent(ClientDetailActivity.this, ClientListActivity.class);
-            Log.i(TAG, "Activity to landscape");
+            //Log.i(TAG, "Activity to landscape");
             startActivity(intent);
         }
 
-        init();
-        fillData();
-
+        initialize();
+        fillViewWithData();
         btnUpdate.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
+        //btnDelete.setOnClickListener(this);
+    }
+
+    private void initialize() {
+        //Log.i(TAG, "Initialized successfully");
+
+        //wijzig btn
+        btnUpdate = findViewById(R.id.btn_update);
+        client = new Client();
+        tv_birthdate = findViewById(R.id.birthdate_firebase);
+        tv_firstname = findViewById(R.id.firstname_firebase);
+        tv_lastname = findViewById(R.id.lastname_firebase);
+        tv_address = findViewById(R.id.address_firebase);
+        tv_zipcode = findViewById(R.id.zipcode_firebase);
+        tv_city = findViewById(R.id.city_firebase);
+        //btnDelete = findViewById(R.id.btnDelete);
+
+        //afbeelding uit FireStorage halen
+        storageReference = FirebaseStorage.getInstance().getReference();
+        iv_profile_pic = findViewById(R.id.iv_profile_pic);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) { //back btn
             onBackPressed();
-            Log.i(TAG, "Back to previous activity succeed");
+            //Log.i(TAG, "Back to previous activity succeed");
             return true;
         }
 
-        Log.e(TAG, "Something went wrong");
+        //Log.e(TAG, "Something went wrong");
         return super.onOptionsItemSelected(item);
     }
 
-    private void init() {
-        Log.i(TAG, "Initialized successfully");
-        client = new Client();
-        tv_birthdate = findViewById(R.id.birthdate_database);
-        tv_firstname = findViewById(R.id.firstname_database);
-        tv_lastname = findViewById(R.id.lastname_database);
-        tvAddress = findViewById(R.id.address_database);
-        tvPostalCode = findViewById(R.id.postalCode_database);
-        tvCity = findViewById(R.id.city_database);
-        btnUpdate = findViewById(R.id.btnUpdate);
-        btnDelete = findViewById(R.id.btnDelete);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-        iv_ProfilePicture = findViewById(R.id.iv_profilePic);
 
-    }
-
-    //Data vullen van vorige view
-    private void fillData() {
-        Log.i(TAG, "Fields filled successfully");
+    //Gegevens vullen
+    private void fillViewWithData() {
+        //Log.i(TAG, "Fields filled successfully");
         clientId = getIntent().getStringExtra("clientId");
         firstname = getIntent().getStringExtra("firstname");
         lastname = getIntent().getStringExtra("lastname");
@@ -97,16 +112,15 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
         zipcode = getIntent().getStringExtra("postalCode");
         city = getIntent().getStringExtra("city");
 
+        String full_name = firstname + " " + lastname;
 
-        String name = firstname + " " + lastname;
-        setTitle(name);
 
-        /*Picasso.get().load(profilePic).into(iv_ProfilePicture);
+        /*Picasso.get().load(profilePic).into(iv_profile_pic);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) { //foto tonen (werkt nog niet!)
             int resid = bundle.getInt("profilePic");
-            iv_ProfilePicture.setImageResource(resid);
+            iv_profile_pic.setImageResource(resid);
         }*/
 
         //profilePic = getIntent().getStringExtra("profilePic");
@@ -115,14 +129,14 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
         tv_birthdate.setText(birthdate);
         tv_firstname.setText(firstname);
         tv_lastname.setText(lastname);
-        tvAddress.setText(address);
-        tvPostalCode.setText(zipcode);
-        tvCity.setText(city);
+        tv_address.setText(address);
+        tv_zipcode.setText(zipcode);
+        tv_city.setText(city);
 
-        fillImageView();
-    }
+        setTitle(full_name); //titel instellen (full_name)
 
-    private void fillImageView() {
+        //fillImageView();
+
         String imageName = clientId;
         StorageReference storageRef = storageReference.child(imageName);
 
@@ -130,53 +144,70 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
         storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                Log.i(TAG, "Image downloaded from Firebase Storage successfully");
+                //Log.i(TAG, "Image downloaded from Firebase Storage successfully");
 
                 // Foto in ImageView zetten
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                iv_ProfilePicture.setImageBitmap(bitmap);
+                iv_profile_pic.setImageBitmap(bitmap);
 
-                Log.i(TAG, "Image posted in ImageView successfully");
+                //Log.i(TAG, "Image posted in ImageView successfully");
             }
         });
     }
 
-   public void onClick(View v) {
-       if (v.getId() == R.id.btnUpdate) {
-           // Naar Activity gaan om gegevens van lid te wijzigen
-           Log.i(TAG, "Update-button clicked");
+   /* private void fillImageView() {
+        String imageName = clientId;
+        StorageReference storageRef = storageReference.child(imageName);
 
-           goToUpdateActivity();
+        final long ONE_MEGABYTE = 1024 * 1024; // Zo groot mag de foto zijn die opgeslagen wordt in de applicatie
+        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                //Log.i(TAG, "Image downloaded from Firebase Storage successfully");
+
+                // Foto in ImageView zetten
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                iv_profile_pic.setImageBitmap(bitmap);
+
+                //Log.i(TAG, "Image posted in ImageView successfully");
+            }
+        });
+    }*/
+
+   public void onClick(View v) {
+       if (v.getId() == R.id.btn_update) {
+           // Naar Activity gaan om gegevens van lid te wijzigen
+           //Log.i(TAG, "Update-button clicked");
+
+           goToUpdate();
        }
-       else if (v.getId() == R.id.btnDelete) {
+       /*else if (v.getId() == R.id.btnDelete) {
            // Lid verwijderen
-           Log.i(TAG, "Delete-button clicked");
+           //Log.i(TAG, "Delete-button clicked");
 
            initializeMember();
-           Log.i(TAG, "Delete: Member initialized successfully");
+           //Log.i(TAG, "Delete: Member initialized successfully");
 
            createDeleteDialog(client.getClientId());
-       }
+       }*/
 
     }
 
-    private void goToUpdateActivity() {
-        Intent intentToUpdateActivity = new Intent(ClientDetailActivity.this, UpdateActivity.class);
+    private void goToUpdate() {
+        Intent intent = new Intent(ClientDetailActivity.this, UpdateActivity.class);
 
-        // Gegevens meegeven aan de intent die getoond moeten worden in UpdateActivity
-        intentToUpdateActivity.putExtra("clientId", clientId    );
-        intentToUpdateActivity.putExtra("firstname", firstname);
-        intentToUpdateActivity.putExtra("lastname", lastname);
-        intentToUpdateActivity.putExtra("birthdate", birthdate);
-        intentToUpdateActivity.putExtra("address", address);
-        intentToUpdateActivity.putExtra("zipcode", zipcode);
-        intentToUpdateActivity.putExtra("city", city);
+        intent.putExtra("clientId", clientId    );
+        intent.putExtra("firstname", firstname);
+        intent.putExtra("lastname", lastname);
+        intent.putExtra("birthdate", birthdate);
+        intent.putExtra("address", address);
+        intent.putExtra("zipcode", zipcode);
+        intent.putExtra("city", city);
 
-
-        // Naar UpdateActivity gaan
-        startActivity(intentToUpdateActivity);
+        startActivity(intent);
     }
 
+    /*
     private void initializeMember() {
         client.setClientId(clientId);
         client.setFirstname(firstname);
@@ -196,7 +227,7 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
         alertDialog.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "Delete member confirmed");
+                //Log.i(TAG, "Delete member confirmed");
 
                 deleteClient(clientId); // Lid verwijderen uit database
             }
@@ -205,7 +236,7 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
         alertDialog.setNegativeButton("Nee", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "Delete member denied");
+                //Log.i(TAG, "Delete member denied");
             }
         });
 
@@ -218,7 +249,7 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
 
         String toastMessage = client.getFirstname() + " " + client.getLastname() + " is verwijderd";
         Toast.makeText(ClientDetailActivity.this, toastMessage, Toast.LENGTH_LONG).show();
-        Log.i(TAG, "Member deleted succesfully");
+        //Log.i(TAG, "Member deleted succesfully");
 
         deleteProfilePicture();
 
@@ -233,9 +264,11 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
         pictureRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.i(TAG, "Profilepicture deleted successfully");
+                //Log.i(TAG, "Profilepicture deleted successfully");
             }
         });
     }
+
+     */
 
 }

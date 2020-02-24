@@ -13,163 +13,171 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_profilePic"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/iv_profile_pic"
+            android:background="#FFFFFF"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:background="@color/warmgray" />
+             />
 
         <TextView
             android:id="@+id/firstname_detail"
+            android:text="@string/detail_firstname"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="@string/detail_firstname"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/orange"/>
+
+            />
 
         <TextView
-            android:id="@+id/firstname_database"
+            android:id="@+id/firstname_firebase"
+            android:text="Voornaam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Voornaam"
             android:textSize="20sp"
-            android:textColor="@color/warmgray"/>
+            android:textColor="@color/darkgray"/>
 
         <TextView
             android:id="@+id/lastname_detail"
+            android:text="@string/detail_lastname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
+            android:textStyle="bold"
             android:paddingEnd="20dp"
-            android:text="@string/detail_lastname"
             android:textColor="@color/orange"
             android:textSize="20sp"
-            android:textStyle="bold" />
+             />
 
         <TextView
-            android:id="@+id/lastname_database"
+            android:id="@+id/lastname_firebase"
+            android:text="Achternaam"
+            android:textColor="@color/darkgray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Achternaam"
             android:textSize="20sp"
-            android:textColor="@color/warmgray"/>
+            />
 
         <TextView
             android:id="@+id/birthdate_detail"
+            android:text="@string/detail_birthdate"
             android:layout_width="wrap_content"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="@string/detail_birthdate"
             android:textColor="@color/orange"
             android:textSize="20sp"
-            android:textStyle="bold" />
+           />
 
         <TextView
-            android:id="@+id/birthdate_database"
+            android:id="@+id/birthdate_firebase"
+            android:text="Geboortedatum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/darkgray"
             android:layout_marginBottom="20dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Geboortedatum"
             android:textSize="20sp"
-            android:textColor="@color/warmgray"/>
+            />
 
         <TextView
-        android:id="@+id/detail_address_label"
+              android:id="@+id/detail_address_label"
+            android:text="Adres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+            android:textStyle="bold"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="Adres"
         android:textColor="@color/orange"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        />
 
         <TextView
-            android:id="@+id/address_database"
+            android:id="@+id/address_firebase"
+            android:text="Adres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Adres"
             android:textSize="20sp"
-            android:textColor="@color/warmgray"/>
+            android:textColor="@color/darkgray"/>
 
         <TextView
-            android:id="@+id/detail_postalCode_label"
+            android:id="@+id/detail_zipcode_label"
+            android:text="Postcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Postcode"
             android:textColor="@color/orange"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/postalCode_database"
+            android:id="@+id/zipcode_firebase"
+            android:text="Postcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Postcode"
             android:textSize="20sp"
-            android:textColor="@color/warmgray"/>
+            android:textColor="@color/darkgray"/>
 
         <TextView
             android:id="@+id/detail_city_label"
+            android:text="Gemeente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Gemeente"
             android:textColor="@color/orange"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/city_database"
+            android:id="@+id/city_firebase"
+            android:text="Gemeente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Gemeente"
             android:textSize="20sp"
-            android:textColor="@color/warmgray"/>
+            android:textColor="@color/darkgray"/>
 
-        <!-- De knoppen -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnUpdate"
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_update"
+                android:text="Wijzig cliënt"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="120dp"
                 android:layout_marginTop="17dp"
                 android:background="@color/orange"
-                android:text="@string/button_update"
                 android:textColor="#FFFFFF" />
 
+            <!--
             <Button
                 android:id="@+id/btnDelete"
                 android:layout_width="100dp"
@@ -177,9 +185,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="17dp"
                 android:layout_marginEnd="20dp"
-                android:background="@color/darkred"
+                android:background="@color/red"
                 android:text="@string/button_delete"
                 android:textColor="#FFFFFF" />
+                -->
 
         </LinearLayout>
 

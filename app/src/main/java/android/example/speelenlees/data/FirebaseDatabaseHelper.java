@@ -26,25 +26,24 @@ public class FirebaseDatabaseHelper {
     }
 
     public void addClient(Client client) {
-        String id = databaseReference.push().getKey(); // push() creëert een unieke string in 'Members' in Firebase
+        String id = databaseReference.push().getKey(); //genereert automatisch id
         client.setClientId(id);
 
         databaseReference.child(id).setValue(client);
     }
 
-    public void updateMember(Client client) {
+    public void updateClient(Client client) {
         databaseReference.child(client.getClientId()).setValue(client);
     }
 
     public void readClients(final DataStatus dataStatus) {
         databaseReference.addValueEventListener(new ValueEventListener() {
-            // onDataChange wordt altijd aangeroepen als er iets verandert in de database
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 clients.clear();
                 List<String> keys = new ArrayList<>();
 
-                // DataSnapshot bevat key en value van een specifieke node (dataSnapshot.getChildren bevat de key en value van members)
+                //bevat key en value
                 for(DataSnapshot keyNode : dataSnapshot.getChildren()) {
                     keys.add(keyNode.getKey());
                     Client client = keyNode.getValue(Client.class);
@@ -61,7 +60,7 @@ public class FirebaseDatabaseHelper {
         });
     }
 
-    public void deleteClient() {
+   /* public void deleteClient() {
         databaseReference.removeValue();
-    }
+    }*/
 }

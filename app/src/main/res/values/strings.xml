@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">Union</string>
+    <string name="app_name">Speel-en-Lees</string>
+    <string name="login">Inloggen</string>
+    <string name="remember_me">Ingelogd blijven?</string>
+    <string name="password">Wachtwoord</string>
+    <string name="email">Email adres</string>
+
 
     <!-- Navigation Menu -->
     <string name="menu_home">Home</string>

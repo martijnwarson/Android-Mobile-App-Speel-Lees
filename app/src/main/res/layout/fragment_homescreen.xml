@@ -7,17 +7,23 @@
     android:orientation="vertical"
     android:id="@+id/homeScreenFragment">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="431dp"
+        android:layout_marginTop="-20dp"
+        android:src="@drawable/logo2" />
 
-
-    <Button
-        android:id="@+id/btn_redirect_list"
+    <TextView
+        android:id="@+id/tv_no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="480dp"
-        android:layout_marginLeft="100dp"
-        android:background="@color/orange"
-        android:text="Naar cliënten overzicht"
-        android:textColor="#FFFFFF" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:paddingRight="20dp"
+        android:text="Hou in deze app alle gegevens van je cliënten bij!"
+        android:textColor="@color/orange"
+        android:textSize="20sp" />
 
 </LinearLayout>

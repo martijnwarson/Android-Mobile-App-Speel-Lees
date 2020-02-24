@@ -66,15 +66,15 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
     }
 
     private void init(View view) {
-        tvFirstname = view.findViewById(R.id.firstname_database);
-        tvLastname = view.findViewById(R.id.lastname_database);
-        tvBirthdate = view.findViewById(R.id.birthdate_database);
-        tvAddress = view.findViewById(R.id.address_database);
-        tvPostalCode = view.findViewById(R.id.postalCode_database);
-        tvCity = view.findViewById(R.id.city_database);
-        ivProfilePicture = view.findViewById(R.id.iv_profilePic);
-        btnUpdate = view.findViewById(R.id.btnUpdate);
-        btnDelete = view.findViewById(R.id.btnDelete);
+        tvFirstname = view.findViewById(R.id.firstname_firebase);
+        tvLastname = view.findViewById(R.id.lastname_firebase);
+        tvBirthdate = view.findViewById(R.id.birthdate_firebase);
+        tvAddress = view.findViewById(R.id.address_firebase);
+        tvPostalCode = view.findViewById(R.id.zipcode_firebase);
+        tvCity = view.findViewById(R.id.city_firebase);
+        ivProfilePicture = view.findViewById(R.id.iv_profile_pic);
+        btnUpdate = view.findViewById(R.id.btn_update);
+        //btnDelete = view.findViewById(R.id.btnDelete);
     }
 
     private void initialize() {
@@ -121,18 +121,18 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
 
 
     public void onClick(View v) {
-        if (v.getId() == R.id.btnUpdate) {
+        if (v.getId() == R.id.btn_update) {
             // Naar activity gaan om gegevens van lid te wijzigen
             Log.i(TAG, "Update-button clicked");
 
             goToUpdateActivity();
         }
-        else if (v.getId() == R.id.btnDelete) {
+        /*else if (v.getId() == R.id.btnDelete) {
             // Lid verwijderen
             Log.i(TAG, "Delete-button clicked");
 
             createDeleteDialog(client.getClientId());
-        }
+        }*/
     }
 
     private void goToUpdateActivity() {
@@ -163,7 +163,7 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "Delete member confirmed");
 
-                deleteMember(clientId); // Lid verwijderen uit database
+                //deleteMember(clientId); // Lid verwijderen uit database
             }
         });
 
@@ -177,6 +177,7 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
         alertDialog.create().show();
     }
 
+    /*
     private void deleteMember(String memberId) {
         FirebaseDatabaseHelper databaseHelper = new FirebaseDatabaseHelper(memberId);
         databaseHelper.deleteClient();
@@ -190,8 +191,9 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
         // Naar MemberListActivity gaan
         Intent intentToMemberListActivity = new Intent(getContext(), ClientListActivity.class);
         startActivity(intentToMemberListActivity);
-    }
+    }*/
 
+    /*
     private void deleteProfilePicture() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(client.getClientId());
 
@@ -201,6 +203,6 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
                 Log.i(TAG, "Profilepicture deleted successfully");
             }
         });
-    }
+    }*/
 
 }

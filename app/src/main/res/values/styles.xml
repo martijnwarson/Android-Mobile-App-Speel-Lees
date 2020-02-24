@@ -19,10 +19,12 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- Om ervoor te zorgen dat er geen enters gedaan kunnen worden in een EditText -->
+    <!--
     <style name="editTextDisableEnter">
         <item name="android:maxLines">1</item>
         <item name="android:lines">1</item>
         <item name="android:singleLine">true</item>
     </style>
+    -->
 
 </resources>
