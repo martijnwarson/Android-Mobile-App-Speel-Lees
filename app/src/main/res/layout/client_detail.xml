@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/firstname_detail"
-            android:text="@string/detail_firstname"
+            android:text="Voornaam"
             android:textColor="@color/orange"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/lastname_detail"
-            android:text="@string/detail_lastname"
+            android:text="Achternaam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
@@ -73,7 +73,7 @@
 
         <TextView
             android:id="@+id/birthdate_detail"
-            android:text="@string/detail_birthdate"
+            android:text="Geboortedatum"
             android:layout_width="wrap_content"
             android:textStyle="bold"
             android:layout_height="wrap_content"

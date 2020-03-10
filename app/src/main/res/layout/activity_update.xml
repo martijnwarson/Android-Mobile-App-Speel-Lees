@@ -34,7 +34,7 @@
 
         <TextView
             android:id="@+id/firstname_detail"
-            android:text="@string/detail_firstname"
+            android:text="Voornaam"
             android:textColor="@color/orange"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
 
         <TextView
             android:id="@+id/lastname_detail"
-            android:text="@string/detail_lastname"
+            android:text="Achternaam"
             android:textColor="@color/orange"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -87,7 +87,7 @@
 
         <TextView
             android:id="@+id/birthdate_detail_detail"
-            android:text="@string/detail_birthdate"
+            android:text="Geboortedatum"
             android:textColor="@color/orange"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -113,7 +113,7 @@
 
         <TextView
             android:id="@+id/address_detail"
-            android:text="@string/detail_address"
+            android:text="Adres"
             android:textColor="@color/orange"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -128,7 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/etAddress"
-            android:hint="Adres"
+            android:hint="Straat + huisnummer"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="21sp"
@@ -167,7 +167,7 @@
 
         <TextView
             android:id="@+id/city_detail"
-            android:text="@string/detail_city"
+            android:text="Gemeente"
             android:textColor="@color/orange"
             android:textStyle="bold"
             android:layout_width="match_parent"

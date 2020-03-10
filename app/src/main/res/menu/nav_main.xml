@@ -7,10 +7,10 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="@string/menu_home" />
+            android:title="Home" />
         <item
             android:id="@+id/nav_show_clients"
-            android:title="@string/menu_show_members" />
+            android:title="Cliënten" />
         <item
             android:id="@+id/nav_add_client"
             android:title="Klant toevoegen" />

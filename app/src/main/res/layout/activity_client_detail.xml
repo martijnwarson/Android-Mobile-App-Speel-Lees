@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/detail_firstname"
+                android:text="Voornaam"
                 android:textColor="@color/orange"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/detail_lastname"
+                android:text="Achternaam"
                 android:textColor="@color/orange"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/detail_birthdate"
+                android:text="Geboortedatum"
                 android:textColor="@color/orange"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -173,7 +173,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="17dp"
                     android:background="@color/orange"
-                    android:text="@string/button_update"
+                    android:text="Wijzig"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>

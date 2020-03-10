@@ -5,27 +5,28 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_home">
 
+
     <fragment
         android:id="@+id/nav_home"
         android:name="be.pxl.speelenlees.activities.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="Home"
         tools:layout="@layout/fragment_homescreen" />
 
     <fragment
         android:id="@+id/nav_add_client"
         android:name="be.pxl.speelenlees.activities.ui.home.InsertFragment"
-        android:label="@string/menu_add_member" />
+        android:label="Cliënt toevoegen" />
 
     <fragment
         android:id="@+id/nav_show_clients"
         android:name="be.pxl.speelenlees.activities.MasterDetailFragment"
-        android:label="@string/menu_show_members"
+        android:label="Cliënten"
         tools:layout="@layout/fragment_master_detail" />
 
     <fragment
         android:id="@+id/nav_logout"
         android:name="be.pxl.speelenlees.activities.ui.home.LogoutFragment"
-        android:label="@string/menu_logout"
+        android:label="Uitloggen"
         tools:layout="@layout/fragment_homescreen" />
 
 </navigation>
