@@ -9,14 +9,12 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
 //import android.view.Menu;
 import android.example.speelenlees.R;
 import android.view.Menu;
 
 //NAVBAR
 public class MainActivity extends AppCompatActivity {
-    //static final String TAG = "MainActivity";
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -30,11 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init();
+        initialize();
     }
 
-    private void init() {
-        //Log.i(TAG, "Views initialized");
+    private void initialize() {
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
         setSupportActionBar(toolbar);

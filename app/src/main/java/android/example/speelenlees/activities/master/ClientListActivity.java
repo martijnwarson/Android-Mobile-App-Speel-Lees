@@ -32,15 +32,14 @@ import android.widget.TextView;
 //RECYCLERVIEW
 public class ClientListActivity extends AppCompatActivity {
     private boolean twoPanes;
-    //private static final String TAG = "ClientsListActivity";
+
 
     // Terug-knop functie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            //Log.i(TAG, "Back-button clicked");
             startActivity(new Intent(ClientListActivity.this, HomeActivity.class));
-            //Log.i(TAG, "Went back to previous activity");
+
             return true;
         }
 
@@ -58,47 +57,25 @@ public class ClientListActivity extends AppCompatActivity {
         //Controleren of smartphone in portrait of landscape mode is
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            //Log.i(TAG, "In Landscape mode");
             twoPanes = false;
         } else {
-            //Log.i(TAG, "In Portait mode");
             twoPanes = true;
 
         }
-
-        /*if (checkLandscapeMode()) {
-            //Log.i(TAG, "In landscape mode");
-            twoPanes = true;
-        }*/
 
         // Recyclerview declareren en implementeren om lijst te maken
         View recyclerView = findViewById(R.id.rv_clients_list); //clients list binden
         assert recyclerView != null; //recyclerview mag niet leeg zijn
-        // Log.i(TAG, "Recyclerview declared");
 
         getDataFromFirebase((RecyclerView) recyclerView);
     }
 
-
-    /*private boolean checkLandscapeMode() {
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            //Log.i(TAG, "In Landscape mode");
-
-            return true;
-        } else {
-            //Log.i(TAG, "In Portait mode");
-
-            return false;
-        }
-    }*/
 
     // Data ophalen uit Firebase
     private void getDataFromFirebase(final RecyclerView recyclerView) {
         new FirebaseDatabaseHelper().readClients(new DataStatus() {
             @Override
             public void DataIsLoaded(List<Client> clients, List<String> keys) {
-               // Log.i(TAG, "Members loaded from Firebase Database successfully");
                 setupRecyclerView(recyclerView, clients, keys); //clients en keys zijn data uit firebase
             }
         });
@@ -107,8 +84,6 @@ public class ClientListActivity extends AppCompatActivity {
     //Recyclerview opbouwen
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<Client> clients, List<String> keys) {
         recyclerView.setAdapter(new ClientsRecyclerViewAdapter(this, clients, keys, twoPanes ));
-
-        //Log.i(TAG, "Adapter set to RecyclerView successfully");
     }
 
 
@@ -126,7 +101,6 @@ public class ClientListActivity extends AppCompatActivity {
             this.keys = keys;
             this.twoPanes = twoPanes;
 
-            //Log.i(TAG, "Adapter constructed successfully");
         }
 
         @NonNull
@@ -155,8 +129,6 @@ public class ClientListActivity extends AppCompatActivity {
 
             holder.itemView.setTag(clients.get(position));
             holder.itemView.setOnClickListener(onClickListener);
-
-            //Log.i(TAG, "View within RecyclerViewList created successfully");
         }
 
         @Override
@@ -170,18 +142,18 @@ public class ClientListActivity extends AppCompatActivity {
                 Client client = (Client) v.getTag();
 
                 if (twoPanes) { // Landscape
-                    Bundle bundle = new Bundle();
+                    Bundle arguments = new Bundle();
 
-                    bundle.putString("clientId", client.getClientId());
-                    bundle.putString("firstname", client.getFirstname());
-                    bundle.putString("lastname", client.getLastname());
-                    bundle.putString("birthdate", client.getBirthdate());
-                    bundle.putString("address", client.getAddress());
-                    bundle.putString("postalCode", client.getZipcode());
-                    bundle.putString("city", client.getCity());
+                    arguments.putString("clientId", client.getClientId());
+                    arguments.putString("firstname", client.getFirstname());
+                    arguments.putString("lastname", client.getLastname());
+                    arguments.putString("birthdate", client.getBirthdate());
+                    arguments.putString("address", client.getAddress());
+                    arguments.putString("postalCode", client.getZipcode());
+                    arguments.putString("city", client.getCity());
 
                     ClientDetailFragment fragment = new ClientDetailFragment();
-                    fragment.setArguments(bundle);
+                    fragment.setArguments(arguments);
                     clientListActivity.getSupportFragmentManager().beginTransaction()
                             .replace(R.id.client_detail_frame, fragment)
                             .commit();
@@ -217,57 +189,3 @@ public class ClientListActivity extends AppCompatActivity {
 }
 
 
-
-
-
-    /*private static final String TAG = "ClientListActivity";
-    DatabaseReference reference;
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    MyAdapter adapter;
-    ArrayList<Client> list;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ClientListActivity parent = ClientListActivity.this;
-        setTitle("Cliënten overzicht");
-
-
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.client_list_land);
-            Log.i(TAG, "Landscape mode");
-
-        } else {
-            Log.i(TAG, "Portait mode");
-            setContentView(R.layout.clients_list);
-        }
-
-        recyclerView = (RecyclerView) findViewById(R.id.rv_clientsList);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(new GridLayoutManager(ClientListActivity.this, 1));
-
-
-        list = new ArrayList<Client>();
-
-        reference = FirebaseDatabase.getInstance().getReference().child("Clients");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list = new ArrayList<Client>();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Client client = dataSnapshot1.getValue(Client.class);
-                    list.add(client);
-                }
-                adapter = new MyAdapter(ClientListActivity.this, list);
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ClientListActivity.this, "Oops... Something went wrong", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-}*/

@@ -32,7 +32,7 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
     Client client;
     TextView tvFirstname, tvLastname, tvBirthdate, tvAddress, tvPostalCode, tvCity;
     ImageView ivProfilePicture;
-    private Button btnUpdate, btnDelete;
+    private Button btnUpdate;
 
 
     public ClientDetailFragment() {
@@ -60,7 +60,6 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
         }
 
         btnUpdate.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
 
         return view;
     }
@@ -74,7 +73,7 @@ public class ClientDetailFragment extends Fragment implements  View.OnClickListe
         tvCity = view.findViewById(R.id.city_firebase);
         ivProfilePicture = view.findViewById(R.id.iv_profile_pic);
         btnUpdate = view.findViewById(R.id.btn_update);
-        //btnDelete = view.findViewById(R.id.btnDelete);
+
     }
 
     private void initialize() {

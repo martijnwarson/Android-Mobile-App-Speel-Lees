@@ -19,6 +19,29 @@
             android:layout_marginEnd="20dp"
             android:layout_marginStart="22dp"/>
 
+        <Button
+            android:id="@+id/upload_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="03dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="22dp"
+            android:background="@color/orange"
+            android:text="Kies een foto"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/firstname_detail"
+            android:text="@string/detail_firstname"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="20sp"
+            />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,12 +49,24 @@
             android:hint="Voornaam"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:textSize="21sp"
             android:textColorHint="@color/darkgray"
             android:backgroundTint="#FFFFFF"
             android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange" />
+
+        <TextView
+            android:id="@+id/lastname_detail"
+            android:text="@string/detail_lastname"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="20sp"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -47,6 +82,18 @@
             android:textColor="@color/orange" />
 
         <TextView
+            android:id="@+id/birthdate_detail"
+            android:text="@string/detail_birthdate"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="20sp"
+            />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvDateSelector"
@@ -58,6 +105,18 @@
             android:textSize="21sp"
             android:textColorHint="@color/darkgray"
             android:textColor="@color/orange" />
+
+        <TextView
+            android:id="@+id/adress_detail"
+            android:text="@string/detail_address"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="20sp"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -72,6 +131,18 @@
             android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"/>
 
+        <TextView
+            android:id="@+id/zipcode_detail"
+            android:text="Postcode"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="20sp"
+            />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,6 +155,19 @@
             android:backgroundTint="#FFFFFF"
             android:textCursorDrawable="@color/darkgray"
             android:textColor="@color/orange"/>
+
+        <TextView
+            android:id="@+id/city_detail"
+            android:text="@string/detail_city"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textSize="20sp"
+            />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

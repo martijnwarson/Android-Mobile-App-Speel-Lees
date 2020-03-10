@@ -25,6 +25,17 @@
                 android:background="@color/darkgray"
                 />
 
+            <Button
+                android:id="@+id/upload_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="03dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="160dp"
+                android:background="@color/orange"
+                android:text="Kies een foto"
+                android:textColor="#FFFFFF" />
+
             <TextView
                 android:id="@+id/tvImageSelector"
                 android:layout_width="wrap_content"

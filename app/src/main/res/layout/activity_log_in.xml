@@ -63,7 +63,7 @@
 
     <CheckBox
         android:id="@+id/cb_remember_me"
-        android:text="@string/remember_me"
+        android:text="@string/remember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="520dp"
@@ -73,17 +73,5 @@
         android:button="@drawable/checkbox"
         android:textColor="@color/orange"/>
 
-    <!--
-    <TextView
-        android:id="@+id/tv_no_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="550dp"
-        android:layout_marginLeft="110dp"
-        android:text="Geen account? Registreer hier"
-        android:textColor="@color/warmgray"
-        android:textSize="14sp" />
-        -->
 
 </RelativeLayout>

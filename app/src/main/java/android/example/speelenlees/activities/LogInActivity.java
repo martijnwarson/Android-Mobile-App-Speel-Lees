@@ -32,7 +32,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     Button btn_login;
     CheckBox cb_remember_me;
-    //TextView tv_no_account;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor; //om shared preferences aan te kunnen passen
@@ -44,12 +43,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in); //login layout koppelen
-        //setTitle("Inloggen");
 
         initialize();
 
         btn_login.setOnClickListener(this);
-        //tv_no_account.setOnClickListener(this);
     }
 
     private void initialize() {
@@ -57,7 +54,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         et_email = findViewById(R.id.et_email);
         et_passwd = findViewById(R.id.et_password);
         btn_login = findViewById(R.id.btn_login);
-        //tv_no_account = findViewById(R.id.tv_no_account);
         cb_remember_me = findViewById(R.id.cb_remember_me);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -79,9 +75,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         if (v.getId() == R.id.btn_login) {
             loginUser();
         }
-        /*else if (v.getId() == R.id.tv_no_account) {
-            redirectToSignUp();
-        }*/
     }
 
     private void loginUser() {
@@ -92,7 +85,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         if (email.isEmpty()) {
             et_email.setError("Geef een email adres in.");
             et_email.requestFocus(); //kunnen op tab duwen
-            Log.e(TAG, "Email field not filled in correctly");
+          ;
         }  else if (password.isEmpty()) {
             et_passwd.setError("Voer een wachtwoord in");
             et_passwd.requestFocus();
@@ -103,8 +96,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
         else {
             // als alles is ingevuld
-            //savePreferences(email, password);
-
             if (cb_remember_me.isChecked()) {
                 editor.putString("android.example.speelenlees.checkbox", "True");
                 editor.commit();
@@ -125,16 +116,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
-    /*private void initializeAuthStateListener() {
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            }
-        };
-    }*/
-
     private void checkPreferences() {
         String  checkbox = preferences.getString("android.example.speelenlees.checkbox", "False");
         String email = preferences.getString("android.example.speelenlees.email", "");
@@ -152,25 +133,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-   /* private void savePreferences(String email, String password) {
-        if (cb_remember_me.isChecked()) {
-            editor.putString("android.example.speelenlees.checkbox", "True");
-            editor.commit();
-            editor.putString("android.example.speelenlees.email", email);
-            editor.commit();
-            editor.putString("android.example.speelenlees.password", password);
-            editor.commit();
-        } else {
-            editor.putString("android.example.speelenlees.checkbox", "False");
-            editor.commit();
-            editor.putString("android.example.speelenlees.email", "");
-            editor.commit();
-            editor.putString("android.example.speelenlees.password", "");
-            editor.commit();
-        }
 
-        Log.i(TAG, "Saved shared preferences");
-    }*/
 
     private void login() {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
@@ -186,29 +149,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     Log.e(TAG, "Login not successfull");
                 }
 
-                /*if (!task.isSuccessful()) {
-                    Toast.makeText(LogInActivity.this, "Gebruikersnaam en/of wachtwoord incorrect. Probeer opnieuw", Toast.LENGTH_LONG).show();
-
-                    Log.e(TAG, "Something went wrong");
-                }
-                else {
-                    Log.i(TAG, "Logged in successfully");
-                    Intent intent = new Intent(LogInActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }*/
             }
         });
     }
-
-    /*private void redirectToSignUp() {
-        Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-        startActivity(intent);
-    }*/
-
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
-    }*/
-
 }

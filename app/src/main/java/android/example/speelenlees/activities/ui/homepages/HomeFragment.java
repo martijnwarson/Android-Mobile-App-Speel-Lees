@@ -15,11 +15,9 @@ import android.widget.Button;
 // HOME FRAGMENT
 // wordt ingeladen in HomeActivity
 public class HomeFragment extends Fragment{
-
-    //private static final String TAG = "HomeFragment";
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Log.i(TAG, "HomeFragment loaded successfully");
+
+        //fragment_homescreen is homepage met logo
        return inflater.inflate(R.layout.fragment_homescreen, container, false);
 
     }

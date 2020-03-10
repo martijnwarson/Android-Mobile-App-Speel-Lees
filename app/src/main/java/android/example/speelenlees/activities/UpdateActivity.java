@@ -39,8 +39,8 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     StorageReference storage_reference;
     Uri filePath;
     String date;
-
     Button btn_update;
+    Button upload_btn;
     EditText et_firstname;
     EditText et_lastname;
     EditText et_address;
@@ -59,8 +59,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
 
     static final int PICK_IMAGE_REQUEST = 124;
 
-    //static final String TAG = "UpdateActivity";
-
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +69,16 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
        setTitle("Cliënt wijzigen");
 
         initialize();
-        //Log.i(TAG, "Views initialized succesfully");
-
         fillViewWithData();
 
-        iv_profile_pic.setOnClickListener(this);
+        //iv_profile_pic.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
         btn_update.setOnClickListener(this);
+        upload_btn.setOnClickListener(this);
 
 
         //Om geboortedatum op te halen
         if (savedInstanceState != null) {
-           //restoreSavedInstanceStates(savedInstanceState);
             date = savedInstanceState.getString("my_birthdate");
             String birthdateString = "Geboortedatum: " + date;
             tv_birthdate.setText(birthdateString);
@@ -99,20 +95,18 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         et_city = findViewById(R.id.etCity);
         dateSelected = true;
         iv_profile_pic = findViewById(R.id.ivUpdateProfilePicture);
+        upload_btn = findViewById(R.id.upload_btn);
         storage_reference = FirebaseStorage.getInstance().getReference();
     }
 
     public void onClick(View v) {
 
         if (v.getId()  == R.id.tvDateSelector) {
-            // Dialoogvenster tonen om data te selecteren
-            showDatePickerDialog();
-        }  else if (v.getId() == R.id.ivUpdateProfilePicture) {
-            // Dialoogvenster tonen om afbeelding te selecteren
+            showDatePicker();
+        }  else if (v.getId() == R.id.upload_btn) {
             showFileChooser();
         } else  if (v.getId() == R.id.btn_update) {
-            // Gegevens van lid wijzigen
-            updateMember();
+            updateClient();
         }
 
     }
@@ -132,16 +126,8 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // Gewijzigde geboortedatum
-        outState.putString("my_birthdate", date);
+        outState.putString("my_birthdate", date); //nieuwe geboortedatum
     }
-
-   /* private void restoreSavedInstanceStates(Bundle savedInstanceState) {
-        // Gewijzigde geboortedatum
-        date = savedInstanceState.getString("my_birthdate");
-        String birthdateString = "Geboortedatum: " + date;
-        tv_birthdate.setText(birthdateString);
-    }*/
 
     private void fillViewWithData() {
         clientId = getIntent().getStringExtra("clientId");
@@ -151,10 +137,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         address = getIntent().getStringExtra("address");
         zipcode = getIntent().getStringExtra("zipcode");
         city = getIntent().getStringExtra("city");
-
-        // Titel van ActionBar aanpassen
-        //String titleName = "Wijzig " + firstname + " " + lastname;
-        //setTitle(titleName);
 
         // Verzamelde data in de tekstvakken zetten
         et_firstname.setText(firstname);
@@ -185,7 +167,7 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void showDatePickerDialog() {
+    private void showDatePicker() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -196,9 +178,8 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void updateMember() {
+    private void updateClient() {
         if (checkUserInputValidity()) {
-           //InitializeMember();
 
             //Client maken
             client = new Client();
@@ -215,7 +196,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
             new FirebaseDatabaseHelper().updateClient(client);
 
             Toast.makeText(UpdateActivity.this, client.getFirstname() + " " + client.getLastname() + " is gewijzigd", Toast.LENGTH_LONG).show();
-           // Log.i(TAG, "Member updated successfully");
 
            goToMemberListActivity();
         }
@@ -237,42 +217,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
             bool = false;
         }
 
-        /*if (!dateSelected) {
-            tv_birthdate.setError("U dient een geboortedatum te kiezen");
-            inputIsValid = false;
-        }*/
-
-        /*
-        if (et_address.getText().length() < 5) {
-            String address = "Straat + huisnummer";
-            et_address.setError("\"" + address + "\" moet minstens 5 karakters hebben");
-            inputIsValid = false;
-        }*/
-
-        //boolean postalCodeIsNumber = true;
-       /* try {
-            Integer.parseInt(et_zipcode.getText().toString());
-        } catch (NumberFormatException e) {
-            postalCodeIsNumber = false;
-        }
-        if (et_zipcode.getText().length() != 5 || !postalCodeIsNumber) {
-            String zipcode = "Postcode";
-            et_zipcode.setError("\"" + zipcode + "\" moet een getal bestaande uit 4 cijfers zijn");
-            inputIsValid = false;
-        }*/
-
-       /*
-        if (et_city.getText().length() < 2) {
-            String city = "Gemeente";
-            et_city.setError("\"" + city + "\" moet minstens 2 karakters hebben");
-            inputIsValid = false;
-        }
-
-        if (inputIsValid) {
-            //Log.i(TAG, "Fields fileld in correctly");
-        } else {
-            //Log.e(TAG, "Fields not filled in correctly");
-        }*/
 
         return bool;
     }
@@ -304,9 +248,8 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Kies een afbeelding"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Kies een profielfoto"), PICK_IMAGE_REQUEST);
     }
-
 
     // Deze methode wordt uitgevoerd als de gebruiker een afbeelding geselecteerd heeft in showFileChooser()-methode
     @Override
@@ -331,26 +274,24 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     // Foto in de storage zetten
     private void uploadPicture() {
         if (filePath != null) {
-            String pictureName = clientId;
-            storage_reference = storage_reference.child(pictureName);
+            String pictureId = clientId;
+            storage_reference = storage_reference.child(pictureId);
 
             storage_reference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //Log.i(TAG, "Image uploaded to Firebase Storage successfully");
-                }
+                                  }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(UpdateActivity.this, "Er is iets fout gegaan bij het uploaden van de profielfoto. Probeer opnieuw", Toast.LENGTH_SHORT).show();
-                    //Log.e(TAG, "Something went wrong uploading the picture to Firebase Storage");
                 }
             });
         }
     }
 
     private void goToMemberListActivity() {
-        Intent intentToDetailsActivity = new Intent(UpdateActivity.this, ClientListActivity.class);
-        startActivity(intentToDetailsActivity);
+        Intent intent = new Intent(UpdateActivity.this, ClientListActivity.class);
+        startActivity(intent);
     }
 }
