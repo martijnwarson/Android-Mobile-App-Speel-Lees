@@ -14,30 +14,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FirebaseDatabaseHelper {
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseRef;
     private List<Client> clients = new ArrayList<>();
 
     public FirebaseDatabaseHelper(){
-        databaseReference = FirebaseDatabase.getInstance().getReference("Clients");
+        databaseRef = FirebaseDatabase.getInstance().getReference("Clients");
     }
 
     public FirebaseDatabaseHelper(String clientId) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Clients").child(clientId);
+        databaseRef = FirebaseDatabase.getInstance().getReference("Clients").child(clientId);
     }
 
     public void addClient(Client client) {
-        String id = databaseReference.push().getKey(); //genereert automatisch id
+        String id = databaseRef.push().getKey(); //genereert automatisch id
         client.setClientId(id);
 
-        databaseReference.child(id).setValue(client);
+        databaseRef.child(id).setValue(client);
     }
 
     public void updateClient(Client client) {
-        databaseReference.child(client.getClientId()).setValue(client);
+        databaseRef.child(client.getClientId()).setValue(client);
     }
 
     public void readClients(final DataStatus dataStatus) {
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 clients.clear();
@@ -60,7 +60,4 @@ public class FirebaseDatabaseHelper {
         });
     }
 
-   /* public void deleteClient() {
-        databaseReference.removeValue();
-    }*/
 }

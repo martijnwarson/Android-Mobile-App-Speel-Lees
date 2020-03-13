@@ -67,10 +67,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return clients.size();
     }
 
-    //INNER CLASS
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView fullname, birthdate;
+        TextView fullname;
+        TextView birthdate;
         ImageView profilePic;
         LinearLayout mainLayout;
 

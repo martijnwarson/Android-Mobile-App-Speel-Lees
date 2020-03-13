@@ -142,25 +142,25 @@ public class ClientListActivity extends AppCompatActivity {
                 Client client = (Client) v.getTag();
 
                 if (twoPanes) { // Landscape
-                    Bundle arguments = new Bundle();
+                    Bundle bundle = new Bundle();
 
-                    arguments.putString("clientId", client.getClientId());
-                    arguments.putString("firstname", client.getFirstname());
-                    arguments.putString("lastname", client.getLastname());
-                    arguments.putString("birthdate", client.getBirthdate());
-                    arguments.putString("address", client.getAddress());
-                    arguments.putString("postalCode", client.getZipcode());
-                    arguments.putString("city", client.getCity());
+                    bundle.putString("clientId", client.getClientId());
+                    bundle.putString("firstname", client.getFirstname());
+                    bundle.putString("lastname", client.getLastname());
+                    bundle.putString("birthdate", client.getBirthdate());
+                    bundle.putString("address", client.getAddress());
+                    bundle.putString("postalCode", client.getZipcode());
+                    bundle.putString("city", client.getCity());
 
                     ClientDetailFragment fragment = new ClientDetailFragment();
-                    fragment.setArguments(arguments);
+                    fragment.setArguments(bundle);
                     clientListActivity.getSupportFragmentManager().beginTransaction()
                             .replace(R.id.client_detail_frame, fragment)
                             .commit();
                 } else {
                     // Portrait
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, ClientDetailActivity.class);
+                    Context ctx = v.getContext();
+                    Intent intent = new Intent(ctx, ClientDetailActivity.class);
 
                     intent.putExtra("clientId", client.getClientId());
                     intent.putExtra("firstname", client.getFirstname());
@@ -170,7 +170,7 @@ public class ClientListActivity extends AppCompatActivity {
                     intent.putExtra("postalCode", client.getZipcode());
                     intent.putExtra("city", client.getCity());
 
-                    context.startActivity(intent);  // DetailActivity openen
+                    ctx.startActivity(intent);  // DetailActivity openen
                 }
             }
         };
