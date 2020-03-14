@@ -40,8 +40,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         setContentView(R.layout.activity_log_in); //login layout koppelen
 
         initialize();
@@ -84,18 +84,15 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         if (email.isEmpty()) {
             et_email.setError("Geef een email adres in.");
-            et_email.requestFocus(); //kunnen op tab duwen
-          ;
         }  else if (password.isEmpty()) {
             et_passwd.setError("Voer een wachtwoord in");
-            et_passwd.requestFocus();
             Log.e(TAG, "Password field not filled in correctly");
         } else  if (email.isEmpty() && password.isEmpty()) {
             Toast.makeText(this, "Zowel email als wachtwoord dienen ingevuld te zijn", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Fields not filled in correctly");
         }
         else {
-            // als alles is ingevuld
+            // als cb aangeklikt is
             if (cb_remember_me.isChecked()) {
                 editor.putString("android.example.speelenlees.checkbox", "True");
                 editor.commit();
@@ -132,8 +129,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
-
-
 
     private void login() {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {

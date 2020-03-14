@@ -53,10 +53,9 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     String address;
     String zipcode;
     String city;
+    ImageView iv_profile_pic;
     Client client;
     boolean dateSelected;
-    ImageView iv_profile_pic;
-
     static final int PICK_IMAGE_REQUEST = 124;
 
 
@@ -69,7 +68,7 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
        setTitle("Cliënt wijzigen");
 
         initialize();
-        fillViewWithData();
+        fillData();
 
         //iv_profile_pic.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
@@ -129,7 +128,7 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         outState.putString("my_birthdate", date); //nieuwe geboortedatum
     }
 
-    private void fillViewWithData() {
+    private void fillData() {
         clientId = getIntent().getStringExtra("clientId");
         firstname = getIntent().getStringExtra("firstname");
         lastname = getIntent().getStringExtra("lastname");
@@ -149,11 +148,11 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         tv_birthdate.setText(birthdateString);
 
         // Foto tonen in de imageView
-        showImage();
+        showProfilePicture();
     }
 
 
-    private void showImage() {
+    private void showProfilePicture() {
         String image_name = clientId;
         StorageReference storageReference = storage_reference.child(image_name);
 
@@ -172,15 +171,13 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-
         DatePickerDialog dialog = new DatePickerDialog(UpdateActivity.this, AlertDialog.THEME_HOLO_LIGHT, this, year, month, day);
         dialog.show();
     }
 
 
     private void updateClient() {
-        if (checkUserInputValidity()) {
-
+        if (validateUserInput()) {
             //Client maken
             client = new Client();
             client.setClientId(clientId);
@@ -197,23 +194,23 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
 
             Toast.makeText(UpdateActivity.this, client.getFirstname() + " " + client.getLastname() + " is gewijzigd", Toast.LENGTH_LONG).show();
 
-           goToMemberListActivity();
+           goToClientListActivity();
         }
     }
 
 
-    private boolean checkUserInputValidity() {
+    private boolean validateUserInput() {
         boolean bool = true;
 
         if (et_firstname.getText().length() < 2) {
             String firstname = "Voornaam";
-            et_firstname.setError("\"" + firstname + "\" dient minstens 2 karakters te hebben");
+            et_firstname.setError(firstname + " is te kort");
             bool = false;
         }
 
         if (et_lastname.getText().length() < 2) {
             String lastname = "Achternaam";
-            et_lastname.setError("\"" + lastname + "\" dint minstens 2 karakters te hebben");
+            et_lastname.setError(lastname + " is te kort");
             bool = false;
         }
 
@@ -251,15 +248,29 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         startActivityForResult(Intent.createChooser(intent, "Kies een profielfoto"), PICK_IMAGE_REQUEST);
     }
 
-    // Deze methode wordt uitgevoerd als de gebruiker een afbeelding geselecteerd heeft in showFileChooser()-methode
+    //na kiezen van afbeelding in filesystem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
-            // Afbeelding uploaden in database. Dit wordt hier al gedaan omdat er een beetje vertraging zit in het updaten van de foto in de storage zelf
-            uploadPicture();
+            //foto uploaden naar storage
+            if (filePath != null) {
+                String pictureId = clientId;
+                storage_reference = storage_reference.child(pictureId);
+
+                storage_reference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UpdateActivity.this, "Er is iets fout gegaan bij het uploaden van de profielfoto. Probeer opnieuw", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
             // Toon geselecteerde afbeelding in ImageView
             try {
@@ -271,26 +282,8 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    // Foto in de storage zetten
-    private void uploadPicture() {
-        if (filePath != null) {
-            String pictureId = clientId;
-            storage_reference = storage_reference.child(pictureId);
 
-            storage_reference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                  }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(UpdateActivity.this, "Er is iets fout gegaan bij het uploaden van de profielfoto. Probeer opnieuw", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-    private void goToMemberListActivity() {
+    private void goToClientListActivity() {
         Intent intent = new Intent(UpdateActivity.this, ClientListActivity.class);
         startActivity(intent);
     }

@@ -38,7 +38,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
     private EditText et_firstname;
     private Client client;
     private String date;
-    private ImageView iv_profile_pic;
+    private ImageView profile_pic;
     private Button btn_register;
     private Button upload_btn;
     private FirebaseDatabaseHelper firebaseDatabaseHelper;
@@ -65,7 +65,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
 
         initialize();
 
-        iv_profile_pic.setOnClickListener(this);
+        profile_pic.setOnClickListener(this);
         tv_date.setOnClickListener(this);
         btn_register.setOnClickListener(this);
         upload_btn.setOnClickListener(this);
@@ -80,7 +80,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
             image = savedInstanceState.getParcelable("my_profilepicture");
 
             if (image != null) {
-                iv_profile_pic.setImageURI(image);
+                profile_pic.setImageURI(image);
                 tv_image_selector.setVisibility(View.INVISIBLE);
             }
 
@@ -115,7 +115,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
         et_address = root.findViewById(R.id.etAddress);
         et_zipcode = root.findViewById(R.id.etPostcalCode);
         et_city = root.findViewById(R.id.etCity);
-        iv_profile_pic = root.findViewById(R.id.ivProfilePicture);
+        profile_pic = root.findViewById(R.id.ivProfilePicture);
         btn_register = root.findViewById(R.id.btnRegister);
         upload_btn = root.findViewById(R.id.upload_btn);
 
@@ -199,13 +199,13 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
 
         if (et_firstname.getText().length() < 2) {
             String firstname = "Voornaam";
-            et_firstname.setError("\"" + firstname + "\" dient minstens 2 karakters te hebben");
+            et_firstname.setError(firstname + " is te kort");
             bool = false;
         }
 
         if (et_lastname.getText().length() < 2) {
             String lastname = "Achternaam";
-            et_lastname.setError("\"" + lastname + "\" dient minstens 2 karakters te hebben");
+            et_lastname.setError(lastname + " is te kort");
             bool = false;
         }
 
@@ -223,8 +223,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
     }
 
 
-
-    // Deze methode wordt uitgevoerd als de gebruiker een afbeelding geselecteerd heeft in showFileChooser()-methode
+    // als gebruiker foto heeft gekozen
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -232,7 +231,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
         if(requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
             image = data.getData();
             tv_image_selector.setVisibility(View.INVISIBLE);
-            iv_profile_pic.setImageURI(image);
+            profile_pic.setImageURI(image);
             tv_image_selector.setError(null);
             imageSelected = true;
         }
@@ -253,8 +252,7 @@ public class AddClientFragment extends Fragment implements View.OnClickListener,
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    // Foto toevoegen aan storage = mislukt
-                    Toast.makeText(getContext(), "Foto opslaan mislukt.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Foto opslaan niet gelukt.", Toast.LENGTH_SHORT).show();
 
                 }
             });

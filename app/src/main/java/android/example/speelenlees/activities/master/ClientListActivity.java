@@ -50,7 +50,7 @@ public class ClientListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clients_list); //bind activity_clients_list
-        setTitle("Cliënten overzicht"); //Titel
+        setTitle("Cliënten overzicht");
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Terug-knop
 
@@ -67,12 +67,12 @@ public class ClientListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.rv_clients_list); //clients list binden
         assert recyclerView != null; //recyclerview mag niet leeg zijn
 
-        getDataFromFirebase((RecyclerView) recyclerView);
+        getDataFb((RecyclerView) recyclerView);
     }
 
 
     // Data ophalen uit Firebase
-    private void getDataFromFirebase(final RecyclerView recyclerView) {
+    private void getDataFb(final RecyclerView recyclerView) {
         new FirebaseDatabaseHelper().readClients(new DataStatus() {
             @Override
             public void DataIsLoaded(List<Client> clients, List<String> keys) {
@@ -87,7 +87,7 @@ public class ClientListActivity extends AppCompatActivity {
     }
 
 
-    //Gegevens in de recyclerview steken (adapter)
+    //Gegevens plaatsen in recyclerview (adapter)
     public static class ClientsRecyclerViewAdapter extends RecyclerView.Adapter<ClientsRecyclerViewAdapter.ViewHolder> {
         private final ClientListActivity clientListActivity;
         private final List<String> keys;

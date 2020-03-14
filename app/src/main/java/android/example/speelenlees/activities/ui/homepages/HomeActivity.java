@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                 break;
             case R.id.nav_client_list:
+                //Gaat gaar ClientsListActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MasterDetailFragment()).commit();
                 break;
             case R.id.nav_add_client:

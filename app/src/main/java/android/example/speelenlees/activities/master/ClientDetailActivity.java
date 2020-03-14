@@ -38,7 +38,7 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
     String zipcode;
     String city;
     StorageReference storageReference;
-    ImageView iv_profile_pic;
+    ImageView profile_pic;
 
 
     @Override
@@ -55,7 +55,8 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
         }
 
         initialize();
-        fillViewWithData();
+        fillData();
+
         btn_update.setOnClickListener(this);
     }
 
@@ -73,7 +74,7 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
 
         //afbeelding uit FireStorage halen
         storageReference = FirebaseStorage.getInstance().getReference();
-        iv_profile_pic = findViewById(R.id.iv_profile_pic);
+        profile_pic = findViewById(R.id.iv_profile_pic);
     }
 
     @Override
@@ -84,14 +85,13 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
             return true;
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
 
 
     //Gegevens vullen
-    private void fillViewWithData() {
+    private void fillData() {
         clientId = getIntent().getStringExtra("clientId");
         firstname = getIntent().getStringExtra("firstname");
         lastname = getIntent().getStringExtra("lastname");
@@ -124,7 +124,7 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
 
                 // Foto in ImageView zetten
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                iv_profile_pic.setImageBitmap(bitmap);
+                profile_pic.setImageBitmap(bitmap);
 
 
             }
@@ -134,25 +134,21 @@ public class ClientDetailActivity extends AppCompatActivity implements View.OnCl
 
    public void onClick(View v) {
        if (v.getId() == R.id.btn_update) {
+           Intent intent = new Intent(ClientDetailActivity.this, UpdateActivity.class);
 
-           goToUpdate();
+           intent.putExtra("clientId", clientId    );
+           intent.putExtra("firstname", firstname);
+           intent.putExtra("lastname", lastname);
+           intent.putExtra("birthdate", birthdate);
+           intent.putExtra("address", address);
+           intent.putExtra("zipcode", zipcode);
+           intent.putExtra("city", city);
+
+           startActivity(intent);
        }
 
     }
 
-    private void goToUpdate() {
-        Intent intent = new Intent(ClientDetailActivity.this, UpdateActivity.class);
-
-        intent.putExtra("clientId", clientId    );
-        intent.putExtra("firstname", firstname);
-        intent.putExtra("lastname", lastname);
-        intent.putExtra("birthdate", birthdate);
-        intent.putExtra("address", address);
-        intent.putExtra("zipcode", zipcode);
-        intent.putExtra("city", city);
-
-        startActivity(intent);
-    }
 
 
 }

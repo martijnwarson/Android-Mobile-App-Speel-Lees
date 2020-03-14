@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.example.speelenlees.R;
 import android.example.speelenlees.activities.master.ClientListActivity;
 
-//Pagina wat gebruikt wordt voor redirect naar recyclerview
 public class MasterDetailFragment extends Fragment {
     public MasterDetailFragment() {
     }
